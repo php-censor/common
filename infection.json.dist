@@ -1,0 +1,27 @@
+{
+    "timeout": 10,
+    "source": {
+        "directories": [
+            "src"
+        ]
+    },
+    "logs": {
+        "text": "tests/var/log/infection.log"
+    },
+    "mutators": {
+        "@default": true,
+        "MethodCallRemoval": {
+            "ignore": [
+                "PHPCensor\\Common\\PathResolver::resolveDirectory",
+                "PHPCensor\\Common\\PathResolver::resolveBinaryPath",
+                "PHPCensor\\Common\\Plugin\\Plugin::initOptions"
+            ]
+        },
+        "ProtectedVisibility": {
+            "ignore": [
+                "PHPCensor\\Common\\Plugin\\Plugin::initOptions",
+                "PHPCensor\\Common\\Plugin\\Plugin::initBuildSettings"
+            ]
+        }
+    }
+}

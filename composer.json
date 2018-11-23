@@ -1,0 +1,55 @@
+{
+    "name": "php-censor/common",
+    "description": "PHP Censor common library",
+    "minimum-stability": "stable",
+    "type": "library",
+    "keywords": [
+        "php",
+        "php-censor",
+        "ci-server",
+        "testing",
+        "self-hosted",
+        "open-source",
+        "ci",
+        "continuous integration"
+    ],
+    "homepage": "http://php-censor.info",
+    "license": "BSD-2-Clause",
+    "authors": [
+        {
+            "name": "Dmitry Khomutov",
+            "email": "poisoncorpsee@gmail.com",
+            "homepage": "http://corpsee.com",
+            "role": "PHP Censor developer"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/php-censor/common/issues",
+        "source": "https://github.com/php-censor/common"
+    },
+    "autoload": {
+        "psr-4": {
+            "PHPCensor\\Common\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\PHPCensor\\Common\\": "tests/src"
+        }
+    },
+    "require": {
+        "php":           ">=7.1.0",
+        "ext-json":      "*",
+        "psr/container": "^1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit":           "^7.5",
+        "friendsofphp/php-cs-fixer": "^2.16",
+        "infection/infection":       "^0.12"
+    },
+    "extra": {
+        "platform": {
+            "php": "7.1.*"
+        }
+    }
+}
