@@ -8,7 +8,7 @@ use PHPCensor\Common\Exception\Exception;
 
 interface CommandExecutorInterface
 {
-    public function executeCommand(array ...$params): bool;
+    public function executeCommand(...$params): bool;
 
     public function enableCommandOutput();
 

@@ -9,7 +9,6 @@ use PHPCensor\Common\Build\BuildInterface;
 use PHPCensor\Common\Build\BuildLoggerInterface;
 use PHPCensor\Common\Build\BuildMetaWriterInterface;
 use PHPCensor\Common\CommandExecutorInterface;
-use PHPCensor\Common\Exception\NotImplementedException;
 use PHPCensor\Common\PathResolverInterface;
 use PHPCensor\Common\Plugin\Plugin;
 use PHPCensor\Common\Plugin\Plugin\ParameterBag;
