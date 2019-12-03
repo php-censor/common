@@ -128,6 +128,8 @@ abstract class Plugin implements PluginInterface
         $this->ignores = $this->pathResolver->resolveIgnores(
             (array)$this->options->get('ignore', [])
         );
+
+        $this->initPluginSettings();
     }
 
     /**
@@ -169,5 +171,9 @@ abstract class Plugin implements PluginInterface
         }
 
         $this->buildSettings = new ParameterBag($buildSettingArray);
+    }
+
+    protected function initPluginSettings()
+    {
     }
 }
