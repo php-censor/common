@@ -4,6 +4,12 @@ declare(strict_types = 1);
 
 namespace PHPCensor\Common\Plugin\Plugin;
 
+/**
+ * @package    PHP Censor
+ * @subpackage Common Library
+ *
+ * @author Dmitry Khomutov <poisoncorpsee@gmail.com>
+ */
 class ParameterBag implements \IteratorAggregate, \Countable
 {
     /**

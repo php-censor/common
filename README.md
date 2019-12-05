@@ -1,5 +1,5 @@
-PHP Censor Common
-=================
+PHP Censor Common Library
+=========================
 
 [WIP] PHP Censor common library (for PHP Censor v2.0+).
 

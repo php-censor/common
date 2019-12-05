@@ -6,6 +6,12 @@ namespace PHPCensor\Common\Plugin;
 
 use PHPCensor\Common\Build\BuildInterface;
 
+/**
+ * @package    PHP Censor
+ * @subpackage Common Library
+ *
+ * @author Dmitry Khomutov <poisoncorpsee@gmail.com>
+ */
 interface ZeroConfigPluginInterface
 {
     /**
@@ -14,8 +20,5 @@ interface ZeroConfigPluginInterface
      *
      * @return bool
      */
-    public static function canExecuteOnStage(
-        string $stage,
-        BuildInterface $build
-    ): bool;
+    public static function canExecuteOnStage(string $stage, BuildInterface $build): bool;
 }

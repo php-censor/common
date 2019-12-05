@@ -4,6 +4,12 @@ declare(strict_types = 1);
 
 namespace PHPCensor\Common\Build;
 
+/**
+ * @package    PHP Censor
+ * @subpackage Common Library
+ *
+ * @author Dmitry Khomutov <poisoncorpsee@gmail.com>
+ */
 interface BuildErrorWriterInterface
 {
     /**
@@ -25,5 +31,5 @@ interface BuildErrorWriterInterface
         ?int $lineStart = null,
         ?int $lineEnd = null,
         ?\DateTime $createdDate = null
-    );
+    ): void;
 }

@@ -1,6 +1,6 @@
 {
     "name": "php-censor/common",
-    "description": "PHP Censor common library",
+    "description": "PHP Censor Common Library",
     "minimum-stability": "stable",
     "type": "library",
     "keywords": [

@@ -8,6 +8,12 @@ use PHPCensor\Common\Build\BuildInterface;
 use PHPCensor\Common\Build\BuildLoggerInterface;
 use PHPCensor\Common\Plugin\Plugin\ParameterBag;
 
+/**
+ * @package    PHP Censor
+ * @subpackage Common Library
+ *
+ * @author Dmitry Khomutov <poisoncorpsee@gmail.com>
+ */
 class PathResolver implements PathResolverInterface
 {
     /**
@@ -200,7 +206,7 @@ class PathResolver implements PathResolverInterface
      *
      * @return string
      */
-    private function normalizePath(string $path, string $basePath)
+    private function normalizePath(string $path, string $basePath): string
     {
         $path = $this->variableInterpolator->interpolate($path);
 
@@ -218,7 +224,7 @@ class PathResolver implements PathResolverInterface
     /**
      * @param array $projectConfig
      */
-    private function initBuildSettings(array $projectConfig)
+    private function initBuildSettings(array $projectConfig): void
     {
         $buildSettingArray = [];
         if (!empty($projectConfig['build_settings'])) {

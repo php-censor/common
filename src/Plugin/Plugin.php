@@ -14,6 +14,12 @@ use PHPCensor\Common\Plugin\Plugin\ParameterBag;
 use PHPCensor\Common\VariableInterpolatorInterface;
 use Psr\Container\ContainerInterface;
 
+/**
+ * @package    PHP Censor
+ * @subpackage Common Library
+ *
+ * @author Dmitry Khomutov <poisoncorpsee@gmail.com>
+ */
 abstract class Plugin implements PluginInterface
 {
     /**
@@ -67,19 +73,33 @@ abstract class Plugin implements PluginInterface
     protected $buildSettings;
 
     /**
+     * Working directory for plugin (Directory with files for inspecting or directory with tests).
+     * For example: `composer.phar --working-dir="directory"` install
+     *
      * @var string
      */
     protected $directory;
 
     /**
+     * Array of ignoring files and directories. For example: ['.gitkeep', 'tests'].
+     *
      * @var string[]
      */
     protected $ignores;
 
     /**
+     * Path for searching plugin binary (executable). For example '/home/user/bin/'.
+     *
      * @var string
      */
     protected $binaryPath;
+
+    /**
+     * Names of the binary (executable) for searching in the binary path or in the build directory.
+     *
+     * @var array
+     */
+    protected $binaryNames = [];
 
     /**
      * @param BuildInterface                $build
@@ -121,14 +141,15 @@ abstract class Plugin implements PluginInterface
             (string)$this->options->get('directory', '')
         );
 
-        $this->binaryPath = $this->pathResolver->resolveBinaryPath(
-            (string)$this->options->get('binary_path', '')
-        );
-
         $this->ignores = $this->pathResolver->resolveIgnores(
             (array)$this->options->get('ignore', [])
         );
 
+        $this->binaryPath = $this->pathResolver->resolveBinaryPath(
+            (string)$this->options->get('binary_path', '')
+        );
+
+        $this->initBinaryNames();
         $this->initPluginSettings();
     }
 
@@ -147,7 +168,7 @@ abstract class Plugin implements PluginInterface
      *
      * @throws \Exception
      */
-    protected function initOptions(array $projectConfig)
+    protected function initOptions(array $projectConfig): void
     {
         $pluginName         = $this->getName();
         $pluginOptionsArray = [];
@@ -163,7 +184,7 @@ abstract class Plugin implements PluginInterface
     /**
      * @param array $projectConfig
      */
-    protected function initBuildSettings(array $projectConfig)
+    protected function initBuildSettings(array $projectConfig): void
     {
         $buildSettingArray = [];
         if (!empty($projectConfig['build_settings'])) {
@@ -173,7 +194,42 @@ abstract class Plugin implements PluginInterface
         $this->buildSettings = new ParameterBag($buildSettingArray);
     }
 
-    protected function initPluginSettings()
+    protected function initBinaryNames(): void
     {
+        $this->binaryNames = $this->getPluginDefaultBinaryNames();
+        if ($this->options->has('binary_name')) {
+            $binaryNames = $this->options->get('binary_name', []);
+            if (!\is_array($binaryNames)) {
+                $binaryNames = [(string)$binaryNames];
+            }
+
+            $this->binaryNames = \array_unique(
+                \array_merge($binaryNames, $this->binaryNames)
+            );
+        }
+
+        $normalizedNames = [];
+        foreach ($this->binaryNames as $binaryName) {
+            if ($binaryName) {
+                $normalizedNames[] = (string)$binaryName;
+            }
+        }
+
+        $this->binaryNames = $normalizedNames;
+    }
+
+    protected function initPluginSettings(): void
+    {
+    }
+
+    /**
+     * If plugin has binary (executable) method should return array of default binary names.
+     * For example: ['executable', 'executable.phar'].
+     *
+     * @return array
+     */
+    protected function getPluginDefaultBinaryNames(): array
+    {
+        return [];
     }
 }

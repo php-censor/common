@@ -6,13 +6,21 @@ namespace PHPCensor\Common;
 
 use PHPCensor\Common\Exception\Exception;
 
+/**
+ * @package    PHP Censor
+ * @subpackage Common Library
+ *
+ * @author Dmitry Khomutov <poisoncorpsee@gmail.com>
+ */
 interface CommandExecutorInterface
 {
     public function executeCommand(...$params): bool;
 
-    public function enableCommandOutput();
+    public function enableCommandOutput(): void;
 
-    public function disableCommandOutput();
+    public function disableCommandOutput(): void;
+
+    public function isEnabledCommandOutput(): bool;
 
     /**
      * @return string
@@ -20,17 +28,15 @@ interface CommandExecutorInterface
     public function getLastCommandOutput(): string;
 
     /**
-     * @param array  $binary
+     * @param array  $binaryNames
      * @param string $binaryPath
-     * @param array  $binaryName
      *
      * @return string
      *
      * @throws Exception
      */
     public function findBinary(
-        array $binary,
-        string $binaryPath = '',
-        array $binaryName = []
+        array $binaryNames,
+        string $binaryPath = ''
     ): string;
 }

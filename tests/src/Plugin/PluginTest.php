@@ -50,6 +50,11 @@ class SimplePlugin extends Plugin
         return $this->options;
     }
 
+    public function getBinaryNames(): array
+    {
+        return $this->binaryNames;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -67,6 +72,14 @@ class SimplePluginWithName extends SimplePlugin
     public static function getName(): string
     {
         return 'simple_plugin_with_name';
+    }
+}
+
+class SimplePluginWithNameAndBinaryNames extends SimplePluginWithName
+{
+    protected function getPluginDefaultBinaryNames(): array
+    {
+        return ['executable', 'executable.phar'];
     }
 }
 
@@ -318,6 +331,118 @@ class PluginTest extends TestCase
             'binary_path' => false,
             'ignore'      => 'foo',
         ], $plugin->getOptions()->all());
+    }
+
+    public function testConstructSuccessWithEmptyBinaryNames()
+    {
+        $plugin = new SimplePluginWithName(
+            $this->build,
+            $this->buildLogger,
+            $this->buildErrorWriter,
+            $this->buildMetaWriter,
+            $this->commandExecutor,
+            $this->variableInterpolator,
+            $this->pathResolver,
+            $this->container,
+            []
+        );
+
+        $this->assertEquals([], $plugin->getBinaryNames());
+    }
+
+    public function testConstructSuccessWithDefaultBinaryNames()
+    {
+        $plugin = new SimplePluginWithNameAndBinaryNames(
+            $this->build,
+            $this->buildLogger,
+            $this->buildErrorWriter,
+            $this->buildMetaWriter,
+            $this->commandExecutor,
+            $this->variableInterpolator,
+            $this->pathResolver,
+            $this->container,
+            []
+        );
+
+        $this->assertEquals(['executable', 'executable.phar'], $plugin->getBinaryNames());
+    }
+
+    public function testConstructSuccessWithBinaryNamesString()
+    {
+        $plugin = new SimplePluginWithNameAndBinaryNames(
+            $this->build,
+            $this->buildLogger,
+            $this->buildErrorWriter,
+            $this->buildMetaWriter,
+            $this->commandExecutor,
+            $this->variableInterpolator,
+            $this->pathResolver,
+            $this->container,
+            [
+                'simple_plugin_with_name' => [
+                    'binary_name' => 'exec',
+                ],
+            ]
+        );
+
+        $this->assertEquals([
+            'exec',
+            'executable',
+            'executable.phar'
+        ], $plugin->getBinaryNames());
+
+        $plugin = new SimplePluginWithNameAndBinaryNames(
+            $this->build,
+            $this->buildLogger,
+            $this->buildErrorWriter,
+            $this->buildMetaWriter,
+            $this->commandExecutor,
+            $this->variableInterpolator,
+            $this->pathResolver,
+            $this->container,
+            [
+                'simple_plugin_with_name' => [
+                    'binary_name' => false,
+                ],
+            ]
+        );
+
+        $this->assertEquals([
+            'executable',
+            'executable.phar'
+        ], $plugin->getBinaryNames());
+    }
+
+    public function testConstructSuccessWithBinaryNamesArray()
+    {
+        $plugin = new SimplePluginWithNameAndBinaryNames(
+            $this->build,
+            $this->buildLogger,
+            $this->buildErrorWriter,
+            $this->buildMetaWriter,
+            $this->commandExecutor,
+            $this->variableInterpolator,
+            $this->pathResolver,
+            $this->container,
+            [
+                'simple_plugin_with_name' => [
+                    'binary_name' => [
+                        'exec',
+                        'exec.phar',
+                        'executable.phar',
+                        '',
+                        false,
+                    ],
+                ],
+            ]
+        );
+
+        $this->assertEquals([
+            'exec',
+            'exec.phar',
+            'executable.phar',
+            'executable',
+        ], $plugin->getBinaryNames());
     }
 
     public function testGetNameSuccess()

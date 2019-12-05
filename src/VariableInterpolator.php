@@ -7,6 +7,12 @@ namespace PHPCensor\Common;
 use PHPCensor\Common\Build\BuildInterface;
 use PHPCensor\Common\Project\ProjectInterface;
 
+/**
+ * @package    PHP Censor
+ * @subpackage Common Library
+ *
+ * @author Dmitry Khomutov <poisoncorpsee@gmail.com>
+ */
 class VariableInterpolator implements VariableInterpolatorInterface
 {
     /**
@@ -49,7 +55,7 @@ class VariableInterpolator implements VariableInterpolatorInterface
         BuildInterface $build,
         ProjectInterface $project,
         string $url
-    ) {
+    ): void {
         $this->variables = [
             '%COMMIT_ID%'       => $build->getCommitId(),
             '%SHORT_COMMIT_ID%' => \substr($build->getCommitId(), 0, 7),
@@ -68,7 +74,7 @@ class VariableInterpolator implements VariableInterpolatorInterface
         ];
     }
 
-    private function initEnvironmentVariables()
+    private function initEnvironmentVariables(): void
     {
         \putenv('PHP_CENSOR=1');
         \putenv('PHP_CENSOR_COMMIT_ID=' . $this->variables['%COMMIT_ID%']);
