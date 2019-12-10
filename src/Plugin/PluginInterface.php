@@ -15,8 +15,6 @@ use PHPCensor\Common\Exception\Exception;
 interface PluginInterface
 {
     /**
-     * @throws \Exception
-     *
      * @return string
      */
     public static function getName(): string;
