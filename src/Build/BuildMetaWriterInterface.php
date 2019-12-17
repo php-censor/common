@@ -15,11 +15,11 @@ interface BuildMetaWriterInterface
     /**
      * @param int    $buildId
      * @param string $key
-     * @param string $value
+     * @param mixed  $value
      */
     public function write(
         int $buildId,
         string $key,
-        string $value
+        $value
     ): void;
 }

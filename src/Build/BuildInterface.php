@@ -144,4 +144,9 @@ interface BuildInterface
      * @return string
      */
     public function getBuildBranchDirectory(): string;
+
+    /**
+     * @return bool
+     */
+    public function isDebug(): bool;
 }
