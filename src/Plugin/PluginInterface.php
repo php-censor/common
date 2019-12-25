@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace PHPCensor\Common\Plugin;
 
+use PHPCensor\Common\Build\BuildInterface;
 use PHPCensor\Common\Exception\Exception;
 
 /**
@@ -25,4 +26,12 @@ interface PluginInterface
      * @throws Exception
      */
     public function execute(): bool;
+
+    /**
+     * @param string         $stage
+     * @param BuildInterface $build
+     *
+     * @return bool
+     */
+    public static function canExecute(string $stage, BuildInterface $build): bool;
 }

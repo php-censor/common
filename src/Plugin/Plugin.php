@@ -164,6 +164,14 @@ abstract class Plugin implements PluginInterface
     abstract public function execute(): bool;
 
     /**
+     * {@inheritdoc}
+     */
+    public static function canExecute(string $stage, BuildInterface $build): bool
+    {
+        return false;
+    }
+
+    /**
      * @param array $projectConfig
      *
      * @throws \Exception
