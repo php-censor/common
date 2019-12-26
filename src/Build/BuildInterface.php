@@ -109,6 +109,11 @@ interface BuildInterface
     public function getStatus(): int;
 
     /**
+     * @return string
+     */
+    public function getLog(): string;
+
+    /**
      * @return \DateTime|null
      */
     public function getCreateDate(): ?\DateTime;

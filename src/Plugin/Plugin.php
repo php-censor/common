@@ -112,7 +112,7 @@ abstract class Plugin implements PluginInterface
      * @param ContainerInterface            $container
      * @param array                         $projectConfig
      *
-     * @throws \Exception
+     * @throws \Throwable
      */
     public function __construct(
         BuildInterface $build,
@@ -226,6 +226,9 @@ abstract class Plugin implements PluginInterface
         $this->binaryNames = $normalizedNames;
     }
 
+    /**
+     * @throws \Throwable
+     */
     protected function initPluginSettings(): void
     {
     }

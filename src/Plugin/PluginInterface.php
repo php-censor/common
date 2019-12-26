@@ -5,7 +5,6 @@ declare(strict_types = 1);
 namespace PHPCensor\Common\Plugin;
 
 use PHPCensor\Common\Build\BuildInterface;
-use PHPCensor\Common\Exception\Exception;
 
 /**
  * @package    PHP Censor
@@ -23,7 +22,7 @@ interface PluginInterface
     /**
      * @return bool
      *
-     * @throws Exception
+     * @throws \Throwable
      */
     public function execute(): bool;
 
