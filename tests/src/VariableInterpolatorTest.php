@@ -82,6 +82,11 @@ class VariableInterpolatorBuild implements BuildInterface
         return 50;
     }
 
+    public function getLog(): string
+    {
+        return "example log text 1\nexample log text 2";
+    }
+
     public function getCreateDate(): ?\DateTime
     {
         return new \DateTime();
@@ -115,6 +120,11 @@ class VariableInterpolatorBuild implements BuildInterface
     public function getBuildBranchDirectory(): string
     {
         return 'build_branch_directory';
+    }
+
+    public function isDebug(): bool
+    {
+        return false;
     }
 }
 
@@ -205,6 +215,30 @@ for testing.')
         self::assertEquals('branch', \getenv('PHP_CENSOR_BRANCH'));
         self::assertEquals('branch_link', \getenv('PHP_CENSOR_BRANCH_LINK'));
         self::assertEquals('environment', \getenv('PHP_CENSOR_ENVIRONMENT'));
+    }
+
+    public function testRealtimeInterpolate()
+    {
+        $interpolator = new VariableInterpolator(
+            new VariableInterpolatorBuild(),
+            new VariableInterpolatorProject(),
+            'http://example.com'
+        );
+
+        self::assertRegExp(
+            '#CURRENT_DATE\: (\d{4}\-\d{2}\-\d{2})#',
+            $interpolator->interpolate('Text with CURRENT_DATE: %CURRENT_DATE% for testing')
+        );
+
+        self::assertRegExp(
+            '#CURRENT_DATETIME\: (\d{4}\-\d{2}\-\d{2}_\d{2}\-\d{2}\-\d{2})#',
+            $interpolator->interpolate('Text with CURRENT_DATETIME: %CURRENT_DATETIME% for testing')
+        );
+
+        self::assertRegExp(
+            '#CURRENT_TIME\: (\d{2}\-\d{2}\-\d{2})#',
+            $interpolator->interpolate('Text with CURRENT_TIME: %CURRENT_TIME% for testing')
+        );
     }
 
     public function testInterpolateWithEndingSlashInUrl()

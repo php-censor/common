@@ -449,4 +449,16 @@ class PluginTest extends TestCase
     {
         $this->assertEquals('simple_plugin_with_name', SimplePluginWithName::getName());
     }
+
+    public function testDefaultCanExecute()
+    {
+        $this->assertFalse(SimplePluginWithName::canExecute(BuildInterface::STAGE_SETUP, $this->build));
+        $this->assertFalse(SimplePluginWithName::canExecute(BuildInterface::STAGE_DEPLOY, $this->build));
+        $this->assertFalse(SimplePluginWithName::canExecute(BuildInterface::STAGE_SUCCESS, $this->build));
+        $this->assertFalse(SimplePluginWithName::canExecute(BuildInterface::STAGE_FIXED, $this->build));
+        $this->assertFalse(SimplePluginWithName::canExecute(BuildInterface::STAGE_COMPLETE, $this->build));
+        $this->assertFalse(SimplePluginWithName::canExecute(BuildInterface::STAGE_FAILURE, $this->build));
+        $this->assertFalse(SimplePluginWithName::canExecute(BuildInterface::STAGE_BROKEN, $this->build));
+        $this->assertFalse(SimplePluginWithName::canExecute(BuildInterface::STAGE_TEST, $this->build));
+    }
 }

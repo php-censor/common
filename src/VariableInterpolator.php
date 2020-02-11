@@ -39,11 +39,26 @@ class VariableInterpolator implements VariableInterpolatorInterface
      */
     public function interpolate(string $string): string
     {
-        return \str_replace(
-            \array_keys($this->variables),
-            \array_values($this->variables),
-            $string
-        );
+        $string = $this->realtimeInterpolate($string);
+
+        $keys   = \array_keys($this->variables);
+        $values = \array_values($this->variables);
+
+        return \str_replace($keys, $values, $string);
+    }
+
+    /**
+     * @param string $string
+     *
+     * @return string
+     */
+    private function realtimeInterpolate(string $string): string
+    {
+        $string = \str_replace('%CURRENT_DATE%', \date('Y-m-d'), $string);
+        $string = \str_replace('%CURRENT_TIME%', \date('H-i-s'), $string);
+        $string = \str_replace('%CURRENT_DATETIME%', \date('Y-m-d_H-i-s'), $string);
+
+        return $string;
     }
 
     /**
