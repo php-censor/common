@@ -48,15 +48,18 @@ class PathResolverTest extends TestCase
         parent::setUp();
 
         $this->rootDirectory = \rtrim(
-            \realpath(__DIR__ . '/../../'), '/\\'
+            \realpath(__DIR__ . '/../../'),
+            '/\\'
         ) . '/';
 
         $this->buildPath = \rtrim(
-            \realpath(__DIR__ . '/../data/build1'), '/\\'
+            \realpath(__DIR__ . '/../data/build1'),
+            '/\\'
         ) . '/';
 
         $this->alternativeBuildPath = \rtrim(
-            \realpath(__DIR__ . '/../data/build2'), '/\\'
+            \realpath(__DIR__ . '/../data/build2'),
+            '/\\'
         ) . '/';
 
         $this->build = $this->createMock(BuildInterface::class);
@@ -173,7 +176,7 @@ class PathResolverTest extends TestCase
             [
                 'build_settings' => [
                     'directory' => '/../../data/build2',
-                ]
+                ],
             ]
         );
 
@@ -232,7 +235,7 @@ class PathResolverTest extends TestCase
             [
                 'build_settings' => [
                     'directory' => $this->rootDirectory . 'tests/data/./build2/',
-                ]
+                ],
             ]
         );
 
@@ -336,7 +339,7 @@ class PathResolverTest extends TestCase
             [
                 'build_settings' => [
                     'binary_path' => '/../../data/build2',
-                ]
+                ],
             ]
         );
 
@@ -395,7 +398,7 @@ class PathResolverTest extends TestCase
             [
                 'build_settings' => [
                     'binary_path' => $this->rootDirectory . 'tests/data/./build2/',
-                ]
+                ],
             ]
         );
 
@@ -539,7 +542,8 @@ class PathResolverTest extends TestCase
             []
         );
 
-        self::assertEquals([],
+        self::assertEquals(
+            [],
             $pathResolver->resolveIgnores([])
         );
 

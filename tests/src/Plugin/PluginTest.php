@@ -388,7 +388,7 @@ class PluginTest extends TestCase
         $this->assertEquals([
             'exec',
             'executable',
-            'executable.phar'
+            'executable.phar',
         ], $plugin->getBinaryNames());
 
         $plugin = new SimplePluginWithNameAndBinaryNames(
@@ -409,7 +409,7 @@ class PluginTest extends TestCase
 
         $this->assertEquals([
             'executable',
-            'executable.phar'
+            'executable.phar',
         ], $plugin->getBinaryNames());
     }
 

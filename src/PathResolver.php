@@ -115,7 +115,7 @@ class PathResolver implements PathResolverInterface
     /**
      * {@inheritdoc}
      */
-    public function resolvePath(string $path,  bool $isFile = false): string
+    public function resolvePath(string $path, bool $isFile = false): string
     {
         return $this->getRealPath(
             $this->normalizePath($path, $this->build->getBuildPath()),
@@ -132,7 +132,9 @@ class PathResolver implements PathResolverInterface
         if ($pluginIgnores) {
             $ignores = \array_merge(
                 $ignores,
-                \array_filter($pluginIgnores, function ($item) { return !empty($item); })
+                \array_filter($pluginIgnores, function ($item) {
+                    return !empty($item);
+                })
             );
         }
 
@@ -176,12 +178,13 @@ class PathResolver implements PathResolverInterface
                 '#[/]{2,}#',
                 '/',
                 \str_replace(['/', '\\'], '/', $path)
-            ), '/'
+            ),
+            '/'
         );
         $parts         = \explode('/', $path);
         $absoluteParts = [];
         foreach ($parts as $part) {
-            if ('.' === $part){
+            if ('.' === $part) {
                 continue;
             }
 
@@ -286,7 +289,9 @@ class PathResolver implements PathResolverInterface
             if ($buildSettingsIgnores) {
                 $this->buildIgnores = \array_filter(
                     $buildSettingsIgnores,
-                    function ($item) { return !empty($item); }
+                    function ($item) {
+                        return !empty($item);
+                    }
                 );
             }
         }
