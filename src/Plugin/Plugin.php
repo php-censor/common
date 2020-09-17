@@ -11,6 +11,7 @@ use PHPCensor\Common\Build\BuildMetaWriterInterface;
 use PHPCensor\Common\CommandExecutorInterface;
 use PHPCensor\Common\PathResolverInterface;
 use PHPCensor\Common\Plugin\Plugin\ParameterBag;
+use PHPCensor\Common\Project\ProjectInterface;
 use PHPCensor\Common\VariableInterpolatorInterface;
 use Psr\Container\ContainerInterface;
 
@@ -26,6 +27,11 @@ abstract class Plugin implements PluginInterface
      * @var BuildInterface
      */
     protected $build;
+
+    /**
+     * @var ProjectInterface
+     */
+    protected $project;
 
     /**
      * @var BuildLoggerInterface
@@ -103,6 +109,7 @@ abstract class Plugin implements PluginInterface
 
     /**
      * @param BuildInterface                $build
+     * @param ProjectInterface              $project
      * @param BuildLoggerInterface          $buildLogger
      * @param BuildErrorWriterInterface     $buildErrorWriter
      * @param BuildMetaWriterInterface      $buildMetaWriter
@@ -116,6 +123,7 @@ abstract class Plugin implements PluginInterface
      */
     public function __construct(
         BuildInterface $build,
+        ProjectInterface $project,
         BuildLoggerInterface $buildLogger,
         BuildErrorWriterInterface $buildErrorWriter,
         BuildMetaWriterInterface $buildMetaWriter,
@@ -126,6 +134,7 @@ abstract class Plugin implements PluginInterface
         array $projectConfig = []
     ) {
         $this->build                = $build;
+        $this->project              = $project;
         $this->buildLogger          = $buildLogger;
         $this->buildErrorWriter     = $buildErrorWriter;
         $this->buildMetaWriter      = $buildMetaWriter;

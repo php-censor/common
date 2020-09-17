@@ -49,11 +49,6 @@ interface BuildInterface
     /**
      * @return string
      */
-    public function getProjectTitle(): string;
-
-    /**
-     * @return string
-     */
     public function getCommitId(): string;
 
     /**
