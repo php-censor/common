@@ -12,6 +12,7 @@ use PHPCensor\Common\CommandExecutorInterface;
 use PHPCensor\Common\PathResolverInterface;
 use PHPCensor\Common\Plugin\Plugin;
 use PHPCensor\Common\Plugin\Plugin\ParameterBag;
+use PHPCensor\Common\Project\ProjectInterface;
 use PHPCensor\Common\VariableInterpolatorInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
@@ -55,6 +56,11 @@ class SimplePlugin extends Plugin
         return $this->binaryNames;
     }
 
+    public function getApplicationUrl(): string
+    {
+        return $this->applicationUrl;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -64,18 +70,7 @@ class SimplePlugin extends Plugin
     }
 }
 
-class SimplePluginWithName extends SimplePlugin
-{
-    /**
-     * {@inheritdoc}
-     */
-    public static function getName(): string
-    {
-        return 'simple_plugin_with_name';
-    }
-}
-
-class SimplePluginWithNameAndBinaryNames extends SimplePluginWithName
+class SimplePluginWithBinaryNames extends SimplePlugin
 {
     protected function getPluginDefaultBinaryNames(): array
     {
@@ -89,6 +84,11 @@ class PluginTest extends TestCase
      * @var \PHPUnit_Framework_MockObject_MockObject|BuildInterface
      */
     private $build;
+
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject|ProjectInterface
+     */
+    private $project;
 
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject|BuildLoggerInterface
@@ -144,6 +144,8 @@ class PluginTest extends TestCase
             ->method('getBuildPath')
             ->willReturn($this->buildPath);
 
+        $this->project = $this->createMock(ProjectInterface::class);
+
         $this->variableInterpolator = $this->createMock(VariableInterpolatorInterface::class);
         $this->variableInterpolator
             ->method('interpolate')
@@ -161,8 +163,9 @@ class PluginTest extends TestCase
 
     public function testConstructSuccess()
     {
-        $plugin = new SimplePluginWithName(
+        $plugin = new SimplePlugin(
             $this->build,
+            $this->project,
             $this->buildLogger,
             $this->buildErrorWriter,
             $this->buildMetaWriter,
@@ -170,10 +173,11 @@ class PluginTest extends TestCase
             $this->variableInterpolator,
             $this->pathResolver,
             $this->container,
+            'https://php-censor.localhost',
             []
         );
 
-        $this->assertInstanceOf(SimplePluginWithName::class, $plugin);
+        $this->assertInstanceOf(SimplePlugin::class, $plugin);
         $this->assertInstanceOf(BuildInterface::class, $plugin->getBuild());
         $this->assertInstanceOf(ParameterBag::class, $plugin->getBuildSettings());
         $this->assertInstanceOf(ParameterBag::class, $plugin->getOptions());
@@ -181,8 +185,9 @@ class PluginTest extends TestCase
 
     public function testConstructSuccessWithDefaultBuildSettings()
     {
-        $plugin = new SimplePluginWithName(
+        $plugin = new SimplePlugin(
             $this->build,
+            $this->project,
             $this->buildLogger,
             $this->buildErrorWriter,
             $this->buildMetaWriter,
@@ -190,13 +195,15 @@ class PluginTest extends TestCase
             $this->variableInterpolator,
             $this->pathResolver,
             $this->container,
+            'https://php-censor.localhost',
             []
         );
 
         $this->assertEquals([], $plugin->getBuildSettings()->all());
 
-        $plugin = new SimplePluginWithName(
+        $plugin = new SimplePlugin(
             $this->build,
+            $this->project,
             $this->buildLogger,
             $this->buildErrorWriter,
             $this->buildMetaWriter,
@@ -204,6 +211,7 @@ class PluginTest extends TestCase
             $this->variableInterpolator,
             $this->pathResolver,
             $this->container,
+            'https://php-censor.localhost',
             [
                 'build_settings' => [],
             ]
@@ -214,8 +222,9 @@ class PluginTest extends TestCase
 
     public function testConstructSuccessWithAlternativeBuildSettings()
     {
-        $plugin = new SimplePluginWithName(
+        $plugin = new SimplePlugin(
             $this->build,
+            $this->project,
             $this->buildLogger,
             $this->buildErrorWriter,
             $this->buildMetaWriter,
@@ -223,6 +232,7 @@ class PluginTest extends TestCase
             $this->variableInterpolator,
             $this->pathResolver,
             $this->container,
+            'https://php-censor.localhost',
             [
                 'build_settings' => [
                     'option_1' => [
@@ -245,8 +255,9 @@ class PluginTest extends TestCase
 
     public function testConstructSuccessWithDefaultPluginOptions()
     {
-        $plugin = new SimplePluginWithName(
+        $plugin = new SimplePlugin(
             $this->build,
+            $this->project,
             $this->buildLogger,
             $this->buildErrorWriter,
             $this->buildMetaWriter,
@@ -254,13 +265,15 @@ class PluginTest extends TestCase
             $this->variableInterpolator,
             $this->pathResolver,
             $this->container,
+            'https://php-censor.localhost',
             []
         );
 
         $this->assertEquals([], $plugin->getOptions()->all());
 
-        $plugin = new SimplePluginWithName(
+        $plugin = new SimplePlugin(
             $this->build,
+            $this->project,
             $this->buildLogger,
             $this->buildErrorWriter,
             $this->buildMetaWriter,
@@ -268,8 +281,9 @@ class PluginTest extends TestCase
             $this->variableInterpolator,
             $this->pathResolver,
             $this->container,
+            'https://php-censor.localhost',
             [
-                'simple_plugin_with_name' => [],
+                'simple_plugin' => [],
             ]
         );
 
@@ -278,8 +292,9 @@ class PluginTest extends TestCase
 
     public function testConstructSuccessWithAlternativePluginOptions()
     {
-        $plugin = new SimplePluginWithName(
+        $plugin = new SimplePlugin(
             $this->build,
+            $this->project,
             $this->buildLogger,
             $this->buildErrorWriter,
             $this->buildMetaWriter,
@@ -287,8 +302,9 @@ class PluginTest extends TestCase
             $this->variableInterpolator,
             $this->pathResolver,
             $this->container,
+            'https://php-censor.localhost',
             [
-                'simple_plugin_with_name' => [
+                'simple_plugin' => [
                     'directory'   => 'directory',
                     'binary_path' => 'binary_path',
                     'ignore'      => [
@@ -308,8 +324,9 @@ class PluginTest extends TestCase
             ],
         ], $plugin->getOptions()->all());
 
-        $plugin = new SimplePluginWithName(
+        $plugin = new SimplePlugin(
             $this->build,
+            $this->project,
             $this->buildLogger,
             $this->buildErrorWriter,
             $this->buildMetaWriter,
@@ -317,8 +334,9 @@ class PluginTest extends TestCase
             $this->variableInterpolator,
             $this->pathResolver,
             $this->container,
+            'https://php-censor.localhost',
             [
-                'simple_plugin_with_name' => [
+                'simple_plugin' => [
                     'directory'   => 235,
                     'binary_path' => false,
                     'ignore'      => 'foo',
@@ -335,8 +353,9 @@ class PluginTest extends TestCase
 
     public function testConstructSuccessWithEmptyBinaryNames()
     {
-        $plugin = new SimplePluginWithName(
+        $plugin = new SimplePlugin(
             $this->build,
+            $this->project,
             $this->buildLogger,
             $this->buildErrorWriter,
             $this->buildMetaWriter,
@@ -344,6 +363,7 @@ class PluginTest extends TestCase
             $this->variableInterpolator,
             $this->pathResolver,
             $this->container,
+            'https://php-censor.localhost',
             []
         );
 
@@ -352,8 +372,9 @@ class PluginTest extends TestCase
 
     public function testConstructSuccessWithDefaultBinaryNames()
     {
-        $plugin = new SimplePluginWithNameAndBinaryNames(
+        $plugin = new SimplePluginWithBinaryNames(
             $this->build,
+            $this->project,
             $this->buildLogger,
             $this->buildErrorWriter,
             $this->buildMetaWriter,
@@ -361,6 +382,7 @@ class PluginTest extends TestCase
             $this->variableInterpolator,
             $this->pathResolver,
             $this->container,
+            'https://php-censor.localhost',
             []
         );
 
@@ -369,8 +391,9 @@ class PluginTest extends TestCase
 
     public function testConstructSuccessWithBinaryNamesString()
     {
-        $plugin = new SimplePluginWithNameAndBinaryNames(
+        $plugin = new SimplePluginWithBinaryNames(
             $this->build,
+            $this->project,
             $this->buildLogger,
             $this->buildErrorWriter,
             $this->buildMetaWriter,
@@ -378,8 +401,9 @@ class PluginTest extends TestCase
             $this->variableInterpolator,
             $this->pathResolver,
             $this->container,
+            'https://php-censor.localhost',
             [
-                'simple_plugin_with_name' => [
+                'simple_plugin' => [
                     'binary_name' => 'exec',
                 ],
             ]
@@ -391,8 +415,9 @@ class PluginTest extends TestCase
             'executable.phar',
         ], $plugin->getBinaryNames());
 
-        $plugin = new SimplePluginWithNameAndBinaryNames(
+        $plugin = new SimplePluginWithBinaryNames(
             $this->build,
+            $this->project,
             $this->buildLogger,
             $this->buildErrorWriter,
             $this->buildMetaWriter,
@@ -400,8 +425,9 @@ class PluginTest extends TestCase
             $this->variableInterpolator,
             $this->pathResolver,
             $this->container,
+            'https://php-censor.localhost',
             [
-                'simple_plugin_with_name' => [
+                'simple_plugin' => [
                     'binary_name' => false,
                 ],
             ]
@@ -415,8 +441,9 @@ class PluginTest extends TestCase
 
     public function testConstructSuccessWithBinaryNamesArray()
     {
-        $plugin = new SimplePluginWithNameAndBinaryNames(
+        $plugin = new SimplePluginWithBinaryNames(
             $this->build,
+            $this->project,
             $this->buildLogger,
             $this->buildErrorWriter,
             $this->buildMetaWriter,
@@ -424,8 +451,9 @@ class PluginTest extends TestCase
             $this->variableInterpolator,
             $this->pathResolver,
             $this->container,
+            'https://php-censor.localhost',
             [
-                'simple_plugin_with_name' => [
+                'simple_plugin' => [
                     'binary_name' => [
                         'exec',
                         'exec.phar',
@@ -447,18 +475,54 @@ class PluginTest extends TestCase
 
     public function testGetNameSuccess()
     {
-        $this->assertEquals('simple_plugin_with_name', SimplePluginWithName::getName());
+        $this->assertEquals('simple_plugin', SimplePlugin::getName());
     }
 
     public function testDefaultCanExecute()
     {
-        $this->assertFalse(SimplePluginWithName::canExecute(BuildInterface::STAGE_SETUP, $this->build));
-        $this->assertFalse(SimplePluginWithName::canExecute(BuildInterface::STAGE_DEPLOY, $this->build));
-        $this->assertFalse(SimplePluginWithName::canExecute(BuildInterface::STAGE_SUCCESS, $this->build));
-        $this->assertFalse(SimplePluginWithName::canExecute(BuildInterface::STAGE_FIXED, $this->build));
-        $this->assertFalse(SimplePluginWithName::canExecute(BuildInterface::STAGE_COMPLETE, $this->build));
-        $this->assertFalse(SimplePluginWithName::canExecute(BuildInterface::STAGE_FAILURE, $this->build));
-        $this->assertFalse(SimplePluginWithName::canExecute(BuildInterface::STAGE_BROKEN, $this->build));
-        $this->assertFalse(SimplePluginWithName::canExecute(BuildInterface::STAGE_TEST, $this->build));
+        $this->assertFalse(SimplePlugin::canExecute(BuildInterface::STAGE_SETUP, $this->build));
+        $this->assertFalse(SimplePlugin::canExecute(BuildInterface::STAGE_DEPLOY, $this->build));
+        $this->assertFalse(SimplePlugin::canExecute(BuildInterface::STAGE_SUCCESS, $this->build));
+        $this->assertFalse(SimplePlugin::canExecute(BuildInterface::STAGE_FIXED, $this->build));
+        $this->assertFalse(SimplePlugin::canExecute(BuildInterface::STAGE_COMPLETE, $this->build));
+        $this->assertFalse(SimplePlugin::canExecute(BuildInterface::STAGE_FAILURE, $this->build));
+        $this->assertFalse(SimplePlugin::canExecute(BuildInterface::STAGE_BROKEN, $this->build));
+        $this->assertFalse(SimplePlugin::canExecute(BuildInterface::STAGE_TEST, $this->build));
+    }
+
+    /**
+     * @dataProvider applicationUrlProvider
+     *
+     * @param string $applicationUrl
+     * @param string $expectedApplicationUrl
+     *
+     * @throws \Throwable
+     */
+    public function testApplicationUrl(string $applicationUrl, string $expectedApplicationUrl)
+    {
+        $plugin = new SimplePlugin(
+            $this->build,
+            $this->project,
+            $this->buildLogger,
+            $this->buildErrorWriter,
+            $this->buildMetaWriter,
+            $this->commandExecutor,
+            $this->variableInterpolator,
+            $this->pathResolver,
+            $this->container,
+            $applicationUrl,
+            []
+        );
+
+        $this->assertEquals($expectedApplicationUrl, $plugin->getApplicationUrl());
+    }
+
+    public function applicationUrlProvider(): array
+    {
+        return [
+            ['http://php-censor.localhost/', 'http://php-censor.localhost/'],
+            ['http://php-censor.localhost', 'http://php-censor.localhost/'],
+            ['http://php-censor.localhost///', 'http://php-censor.localhost/'],
+        ];
     }
 }

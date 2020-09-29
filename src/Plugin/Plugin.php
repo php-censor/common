@@ -80,7 +80,7 @@ abstract class Plugin implements PluginInterface
 
     /**
      * Working directory for plugin (Directory with files for inspecting or directory with tests).
-     * For example: `composer.phar --working-dir="directory"` install
+     * For example: `composer.phar --working-dir="<directory>"` install
      *
      * @var string
      */
@@ -94,7 +94,7 @@ abstract class Plugin implements PluginInterface
     protected $ignores;
 
     /**
-     * Path for searching plugin binary (executable). For example '/home/user/bin/'.
+     * Path for searching plugin binary (executable). For example: '/home/user/bin/'.
      *
      * @var string
      */
@@ -108,6 +108,13 @@ abstract class Plugin implements PluginInterface
     protected $binaryNames = [];
 
     /**
+     * Base application URL. For example: 'https://php-censor.localhost'.
+     *
+     * @var string
+     */
+    protected $applicationUrl;
+
+    /**
      * @param BuildInterface                $build
      * @param ProjectInterface              $project
      * @param BuildLoggerInterface          $buildLogger
@@ -117,6 +124,7 @@ abstract class Plugin implements PluginInterface
      * @param VariableInterpolatorInterface $variableInterpolator
      * @param PathResolverInterface         $pathResolver
      * @param ContainerInterface            $container
+     * @param string                        $applicationUrl
      * @param array                         $projectConfig
      *
      * @throws \Throwable
@@ -131,6 +139,7 @@ abstract class Plugin implements PluginInterface
         VariableInterpolatorInterface $variableInterpolator,
         PathResolverInterface $pathResolver,
         ContainerInterface $container,
+        string $applicationUrl,
         array $projectConfig = []
     ) {
         $this->build                = $build;
@@ -142,6 +151,8 @@ abstract class Plugin implements PluginInterface
         $this->variableInterpolator = $variableInterpolator;
         $this->pathResolver         = $pathResolver;
         $this->container            = $container;
+
+        $this->applicationUrl = \rtrim($applicationUrl, "/") . '/';
 
         $this->initOptions($projectConfig);
         $this->initBuildSettings($projectConfig);
