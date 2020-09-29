@@ -145,6 +145,9 @@ class PluginTest extends TestCase
             ->willReturn($this->buildPath);
 
         $this->project = $this->createMock(ProjectInterface::class);
+        $this->project
+            ->method('getConfig')
+            ->willReturn([]);
 
         $this->variableInterpolator = $this->createMock(VariableInterpolatorInterface::class);
         $this->variableInterpolator
@@ -173,8 +176,7 @@ class PluginTest extends TestCase
             $this->variableInterpolator,
             $this->pathResolver,
             $this->container,
-            'https://php-censor.localhost',
-            []
+            'https://php-censor.localhost'
         );
 
         $this->assertInstanceOf(SimplePlugin::class, $plugin);
@@ -195,11 +197,17 @@ class PluginTest extends TestCase
             $this->variableInterpolator,
             $this->pathResolver,
             $this->container,
-            'https://php-censor.localhost',
-            []
+            'https://php-censor.localhost'
         );
 
         $this->assertEquals([], $plugin->getBuildSettings()->all());
+
+        $this->project = $this->createMock(ProjectInterface::class);
+        $this->project
+            ->method('getConfig')
+            ->willReturn([
+                'build_settings' => [],
+            ]);
 
         $plugin = new SimplePlugin(
             $this->build,
@@ -211,10 +219,7 @@ class PluginTest extends TestCase
             $this->variableInterpolator,
             $this->pathResolver,
             $this->container,
-            'https://php-censor.localhost',
-            [
-                'build_settings' => [],
-            ]
+            'https://php-censor.localhost'
         );
 
         $this->assertEquals([], $plugin->getBuildSettings()->all());
@@ -222,6 +227,19 @@ class PluginTest extends TestCase
 
     public function testConstructSuccessWithAlternativeBuildSettings()
     {
+        $this->project = $this->createMock(ProjectInterface::class);
+        $this->project
+            ->method('getConfig')
+            ->willReturn([
+                'build_settings' => [
+                    'option_1' => [
+                        'file1.php',
+                        'file2.php',
+                    ],
+                    'option_2' => true,
+                ],
+            ]);
+
         $plugin = new SimplePlugin(
             $this->build,
             $this->project,
@@ -232,16 +250,7 @@ class PluginTest extends TestCase
             $this->variableInterpolator,
             $this->pathResolver,
             $this->container,
-            'https://php-censor.localhost',
-            [
-                'build_settings' => [
-                    'option_1' => [
-                        'file1.php',
-                        'file2.php',
-                    ],
-                    'option_2' => true,
-                ],
-            ]
+            'https://php-censor.localhost'
         );
 
         $this->assertEquals([
@@ -265,11 +274,17 @@ class PluginTest extends TestCase
             $this->variableInterpolator,
             $this->pathResolver,
             $this->container,
-            'https://php-censor.localhost',
-            []
+            'https://php-censor.localhost'
         );
 
         $this->assertEquals([], $plugin->getOptions()->all());
+
+        $this->project = $this->createMock(ProjectInterface::class);
+        $this->project
+            ->method('getConfig')
+            ->willReturn([
+                'simple_plugin' => [],
+            ]);
 
         $plugin = new SimplePlugin(
             $this->build,
@@ -281,10 +296,7 @@ class PluginTest extends TestCase
             $this->variableInterpolator,
             $this->pathResolver,
             $this->container,
-            'https://php-censor.localhost',
-            [
-                'simple_plugin' => [],
-            ]
+            'https://php-censor.localhost'
         );
 
         $this->assertEquals([], $plugin->getOptions()->all());
@@ -292,18 +304,10 @@ class PluginTest extends TestCase
 
     public function testConstructSuccessWithAlternativePluginOptions()
     {
-        $plugin = new SimplePlugin(
-            $this->build,
-            $this->project,
-            $this->buildLogger,
-            $this->buildErrorWriter,
-            $this->buildMetaWriter,
-            $this->commandExecutor,
-            $this->variableInterpolator,
-            $this->pathResolver,
-            $this->container,
-            'https://php-censor.localhost',
-            [
+        $this->project = $this->createMock(ProjectInterface::class);
+        $this->project
+            ->method('getConfig')
+            ->willReturn([
                 'simple_plugin' => [
                     'directory'   => 'directory',
                     'binary_path' => 'binary_path',
@@ -312,7 +316,19 @@ class PluginTest extends TestCase
                         'bar',
                     ],
                 ],
-            ]
+            ]);
+
+        $plugin = new SimplePlugin(
+            $this->build,
+            $this->project,
+            $this->buildLogger,
+            $this->buildErrorWriter,
+            $this->buildMetaWriter,
+            $this->commandExecutor,
+            $this->variableInterpolator,
+            $this->pathResolver,
+            $this->container,
+            'https://php-censor.localhost'
         );
 
         $this->assertEquals([
@@ -324,6 +340,17 @@ class PluginTest extends TestCase
             ],
         ], $plugin->getOptions()->all());
 
+        $this->project = $this->createMock(ProjectInterface::class);
+        $this->project
+            ->method('getConfig')
+            ->willReturn([
+                'simple_plugin' => [
+                    'directory'   => 235,
+                    'binary_path' => false,
+                    'ignore'      => 'foo',
+                ],
+            ]);
+
         $plugin = new SimplePlugin(
             $this->build,
             $this->project,
@@ -334,14 +361,7 @@ class PluginTest extends TestCase
             $this->variableInterpolator,
             $this->pathResolver,
             $this->container,
-            'https://php-censor.localhost',
-            [
-                'simple_plugin' => [
-                    'directory'   => 235,
-                    'binary_path' => false,
-                    'ignore'      => 'foo',
-                ],
-            ]
+            'https://php-censor.localhost'
         );
 
         $this->assertEquals([
@@ -363,8 +383,7 @@ class PluginTest extends TestCase
             $this->variableInterpolator,
             $this->pathResolver,
             $this->container,
-            'https://php-censor.localhost',
-            []
+            'https://php-censor.localhost'
         );
 
         $this->assertEquals([], $plugin->getBinaryNames());
@@ -382,8 +401,7 @@ class PluginTest extends TestCase
             $this->variableInterpolator,
             $this->pathResolver,
             $this->container,
-            'https://php-censor.localhost',
-            []
+            'https://php-censor.localhost'
         );
 
         $this->assertEquals(['executable', 'executable.phar'], $plugin->getBinaryNames());
@@ -391,6 +409,15 @@ class PluginTest extends TestCase
 
     public function testConstructSuccessWithBinaryNamesString()
     {
+        $this->project = $this->createMock(ProjectInterface::class);
+        $this->project
+            ->method('getConfig')
+            ->willReturn([
+                'simple_plugin' => [
+                    'binary_name' => 'exec',
+                ],
+            ]);
+
         $plugin = new SimplePluginWithBinaryNames(
             $this->build,
             $this->project,
@@ -401,12 +428,7 @@ class PluginTest extends TestCase
             $this->variableInterpolator,
             $this->pathResolver,
             $this->container,
-            'https://php-censor.localhost',
-            [
-                'simple_plugin' => [
-                    'binary_name' => 'exec',
-                ],
-            ]
+            'https://php-censor.localhost'
         );
 
         $this->assertEquals([
@@ -415,6 +437,15 @@ class PluginTest extends TestCase
             'executable.phar',
         ], $plugin->getBinaryNames());
 
+        $this->project = $this->createMock(ProjectInterface::class);
+        $this->project
+            ->method('getConfig')
+            ->willReturn([
+                'simple_plugin' => [
+                    'binary_name' => false,
+                ],
+            ]);
+
         $plugin = new SimplePluginWithBinaryNames(
             $this->build,
             $this->project,
@@ -425,12 +456,7 @@ class PluginTest extends TestCase
             $this->variableInterpolator,
             $this->pathResolver,
             $this->container,
-            'https://php-censor.localhost',
-            [
-                'simple_plugin' => [
-                    'binary_name' => false,
-                ],
-            ]
+            'https://php-censor.localhost'
         );
 
         $this->assertEquals([
@@ -441,6 +467,21 @@ class PluginTest extends TestCase
 
     public function testConstructSuccessWithBinaryNamesArray()
     {
+        $this->project = $this->createMock(ProjectInterface::class);
+        $this->project
+            ->method('getConfig')
+            ->willReturn([
+                'simple_plugin' => [
+                    'binary_name' => [
+                        'exec',
+                        'exec.phar',
+                        'executable.phar',
+                        '',
+                        false,
+                    ],
+                ],
+            ]);
+
         $plugin = new SimplePluginWithBinaryNames(
             $this->build,
             $this->project,
@@ -451,18 +492,7 @@ class PluginTest extends TestCase
             $this->variableInterpolator,
             $this->pathResolver,
             $this->container,
-            'https://php-censor.localhost',
-            [
-                'simple_plugin' => [
-                    'binary_name' => [
-                        'exec',
-                        'exec.phar',
-                        'executable.phar',
-                        '',
-                        false,
-                    ],
-                ],
-            ]
+            'https://php-censor.localhost'
         );
 
         $this->assertEquals([
@@ -510,8 +540,7 @@ class PluginTest extends TestCase
             $this->variableInterpolator,
             $this->pathResolver,
             $this->container,
-            $applicationUrl,
-            []
+            $applicationUrl
         );
 
         $this->assertEquals($expectedApplicationUrl, $plugin->getApplicationUrl());

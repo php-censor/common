@@ -139,6 +139,11 @@ class VariableInterpolatorProject implements ProjectInterface
     {
         return 'title';
     }
+
+    public function getConfig(): array
+    {
+        return [];
+    }
 }
 
 class VariableInterpolatorTest extends TestCase
@@ -148,7 +153,8 @@ class VariableInterpolatorTest extends TestCase
         $interpolator = new VariableInterpolator(
             new VariableInterpolatorBuild(),
             new VariableInterpolatorProject(),
-            'http://example.com/'
+            'http://example.com/',
+            '1.0.0'
         );
 
         self::assertInstanceOf(VariableInterpolatorInterface::class, $interpolator);
@@ -160,7 +166,8 @@ class VariableInterpolatorTest extends TestCase
         $interpolator = new VariableInterpolator(
             new VariableInterpolatorBuild(),
             new VariableInterpolatorProject(),
-            'http://example.com'
+            'http://example.com',
+            '1.0.0'
         );
 
         self::assertEquals(
@@ -179,7 +186,8 @@ build_path,
 http://example.com/build/view/10,
 branch,
 branch_link,
-environment
+environment,
+1.0.0
 for testing.',
             $interpolator->interpolate('
 Text with
@@ -196,7 +204,8 @@ Text with
 %BUILD_LINK%,
 %BRANCH%,
 %BRANCH_LINK%,
-%ENVIRONMENT%
+%ENVIRONMENT%,
+%APP_VERSION%
 for testing.')
         );
 
@@ -215,6 +224,7 @@ for testing.')
         self::assertEquals('branch', \getenv('PHP_CENSOR_BRANCH'));
         self::assertEquals('branch_link', \getenv('PHP_CENSOR_BRANCH_LINK'));
         self::assertEquals('environment', \getenv('PHP_CENSOR_ENVIRONMENT'));
+        self::assertEquals('1.0.0', \getenv('PHP_CENSOR_APP_VERSION'));
     }
 
     public function testRealtimeInterpolate()
@@ -222,7 +232,8 @@ for testing.')
         $interpolator = new VariableInterpolator(
             new VariableInterpolatorBuild(),
             new VariableInterpolatorProject(),
-            'http://example.com'
+            'http://example.com',
+            '1.0.0'
         );
 
         self::assertRegExp(
@@ -246,7 +257,8 @@ for testing.')
         $interpolator = new VariableInterpolator(
             new VariableInterpolatorBuild(),
             new VariableInterpolatorProject(),
-            'http://example.com/'
+            'http://example.com/',
+            '1.0.0'
         );
 
         self::assertEquals(

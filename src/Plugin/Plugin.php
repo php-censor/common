@@ -125,7 +125,6 @@ abstract class Plugin implements PluginInterface
      * @param PathResolverInterface         $pathResolver
      * @param ContainerInterface            $container
      * @param string                        $applicationUrl
-     * @param array                         $projectConfig
      *
      * @throws \Throwable
      */
@@ -139,8 +138,7 @@ abstract class Plugin implements PluginInterface
         VariableInterpolatorInterface $variableInterpolator,
         PathResolverInterface $pathResolver,
         ContainerInterface $container,
-        string $applicationUrl,
-        array $projectConfig = []
+        string $applicationUrl
     ) {
         $this->build                = $build;
         $this->project              = $project;
@@ -154,8 +152,8 @@ abstract class Plugin implements PluginInterface
 
         $this->applicationUrl = \rtrim($applicationUrl, "/") . '/';
 
-        $this->initOptions($projectConfig);
-        $this->initBuildSettings($projectConfig);
+        $this->initOptions();
+        $this->initBuildSettings();
 
         $this->directory = $this->pathResolver->resolveDirectory(
             (string)$this->options->get('directory', '')
@@ -192,12 +190,12 @@ abstract class Plugin implements PluginInterface
     }
 
     /**
-     * @param array $projectConfig
-     *
      * @throws \Exception
      */
-    protected function initOptions(array $projectConfig): void
+    protected function initOptions(): void
     {
+        $projectConfig = $this->project->getConfig();
+
         $pluginName         = $this->getName();
         $pluginOptionsArray = [];
         if (!empty($projectConfig[$pluginName])) {
@@ -209,11 +207,10 @@ abstract class Plugin implements PluginInterface
         $this->buildLogger->logDebug('Plugin options: ' . \json_encode($this->options->all()));
     }
 
-    /**
-     * @param array $projectConfig
-     */
-    protected function initBuildSettings(array $projectConfig): void
+    protected function initBuildSettings(): void
     {
+        $projectConfig = $this->project->getConfig();
+
         $buildSettingArray = [];
         if (!empty($projectConfig['build_settings'])) {
             $buildSettingArray = $projectConfig['build_settings'];
@@ -228,7 +225,7 @@ abstract class Plugin implements PluginInterface
         if ($this->options->has('binary_name')) {
             $binaryNames = $this->options->get('binary_name', []);
             if (!\is_array($binaryNames)) {
-                $binaryNames = [(string)$binaryNames];
+                $binaryNames = [$binaryNames];
             }
 
             $this->binaryNames = \array_unique(
@@ -239,7 +236,7 @@ abstract class Plugin implements PluginInterface
         $normalizedNames = [];
         foreach ($this->binaryNames as $binaryName) {
             if ($binaryName) {
-                $normalizedNames[] = (string)$binaryName;
+                $normalizedNames[] = $binaryName;
             }
         }
 

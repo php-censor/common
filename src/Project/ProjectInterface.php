@@ -21,4 +21,11 @@ interface ProjectInterface
      * @return string
      */
     public function getTitle(): string;
+
+    /**
+     * Returns build configuration for the project.
+     *
+     * @return array
+     */
+    public function getConfig(): array;
 }

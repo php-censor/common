@@ -23,14 +23,16 @@ class VariableInterpolator implements VariableInterpolatorInterface
     /**
      * @param BuildInterface   $build
      * @param ProjectInterface $project
-     * @param string           $url
+     * @param string           $applicationBaseUrl
+     * @param string           $applicationVersion
      */
     public function __construct(
         BuildInterface $build,
         ProjectInterface $project,
-        string $url
+        string $applicationBaseUrl,
+        string $applicationVersion
     ) {
-        $this->initVariables($build, $project, $url);
+        $this->initVariables($build, $project, $applicationBaseUrl, $applicationVersion);
         $this->initEnvironmentVariables();
     }
 
@@ -64,12 +66,14 @@ class VariableInterpolator implements VariableInterpolatorInterface
     /**
      * @param BuildInterface   $build
      * @param ProjectInterface $project
-     * @param string           $url
+     * @param string           $applicationBaseUrl
+     * @param string           $applicationVersion
      */
     private function initVariables(
         BuildInterface $build,
         ProjectInterface $project,
-        string $url
+        string $applicationBaseUrl,
+        string $applicationVersion
     ): void {
         $this->variables = [
             '%COMMIT_ID%'       => $build->getCommitId(),
@@ -79,13 +83,14 @@ class VariableInterpolator implements VariableInterpolatorInterface
             '%COMMIT_LINK%'     => $build->getCommitLink(),
             '%PROJECT_ID%'      => $project->getId(),
             '%PROJECT_TITLE%'   => $project->getTitle(),
-            '%PROJECT_LINK%'    => \rtrim($url, '/') . '/project/view/' . $project->getId(),
+            '%PROJECT_LINK%'    => \rtrim($applicationBaseUrl, '/') . '/project/view/' . $project->getId(),
             '%BUILD_ID%'        => $build->getId(),
             '%BUILD_PATH%'      => $build->getBuildPath(),
-            '%BUILD_LINK%'      => \rtrim($url, '/') . '/build/view/' . $build->getId(),
+            '%BUILD_LINK%'      => \rtrim($applicationBaseUrl, '/') . '/build/view/' . $build->getId(),
             '%BRANCH%'          => $build->getBranch(),
             '%BRANCH_LINK%'     => $build->getBranchLink(),
             '%ENVIRONMENT%'     => $build->getEnvironment(),
+            '%APP_VERSION%'     => $applicationVersion,
         ];
     }
 
@@ -106,5 +111,6 @@ class VariableInterpolator implements VariableInterpolatorInterface
         \putenv('PHP_CENSOR_BRANCH=' . $this->variables['%BRANCH%']);
         \putenv('PHP_CENSOR_BRANCH_LINK=' . $this->variables['%BRANCH_LINK%']);
         \putenv('PHP_CENSOR_ENVIRONMENT=' . $this->variables['%ENVIRONMENT%']);
+        \putenv('PHP_CENSOR_APP_VERSION=' . $this->variables['%APP_VERSION%']);
     }
 }
