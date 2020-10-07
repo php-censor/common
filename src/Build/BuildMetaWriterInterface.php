@@ -12,13 +12,21 @@ namespace PHPCensor\Common\Build;
  */
 interface BuildMetaWriterInterface
 {
+    public const KEY_DATA     = 'data';
+    public const KEY_META     = 'meta';
+    public const KEY_ERRORS   = 'errors';
+    public const KEY_WARNINGS = 'warnings';
+    public const KEY_COVERAGE = 'coverage';
+
     /**
      * @param int    $buildId
+     * @param string $plugin
      * @param string $key
      * @param mixed  $value
      */
     public function write(
         int $buildId,
+        string $plugin,
         string $key,
         $value
     ): void;
