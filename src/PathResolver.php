@@ -140,7 +140,7 @@ class PathResolver implements PathResolverInterface
 
         $baseDirectory = $this->build->getBuildPath();
 
-        \array_walk($ignores, function (&$value) use ($baseDirectory) {
+        \array_walk($ignores, function (string &$value) use ($baseDirectory) {
             $value = \str_replace(
                 $baseDirectory,
                 '',
@@ -289,7 +289,7 @@ class PathResolver implements PathResolverInterface
             if ($buildSettingsIgnores) {
                 $this->buildIgnores = \array_filter(
                     $buildSettingsIgnores,
-                    function ($item) {
+                    function (string $item) {
                         return !empty($item);
                     }
                 );
