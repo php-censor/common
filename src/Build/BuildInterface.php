@@ -154,4 +154,11 @@ interface BuildInterface
      * @return bool
      */
     public function isDebug(): bool;
+
+    /**
+     * Example: http://php-censor.local/build/view/1
+     *
+     * @return string
+     */
+    public function getLink(): string;
 }

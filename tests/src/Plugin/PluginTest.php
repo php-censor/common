@@ -56,11 +56,6 @@ class SimplePlugin extends Plugin
         return $this->binaryNames;
     }
 
-    public function getApplicationUrl(): string
-    {
-        return $this->applicationUrl;
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -518,40 +513,5 @@ class PluginTest extends TestCase
         $this->assertFalse(SimplePlugin::canExecute(BuildInterface::STAGE_FAILURE, $this->build));
         $this->assertFalse(SimplePlugin::canExecute(BuildInterface::STAGE_BROKEN, $this->build));
         $this->assertFalse(SimplePlugin::canExecute(BuildInterface::STAGE_TEST, $this->build));
-    }
-
-    /**
-     * @dataProvider applicationUrlProvider
-     *
-     * @param string $applicationUrl
-     * @param string $expectedApplicationUrl
-     *
-     * @throws \Throwable
-     */
-    public function testApplicationUrl(string $applicationUrl, string $expectedApplicationUrl)
-    {
-        $plugin = new SimplePlugin(
-            $this->build,
-            $this->project,
-            $this->buildLogger,
-            $this->buildErrorWriter,
-            $this->buildMetaWriter,
-            $this->commandExecutor,
-            $this->variableInterpolator,
-            $this->pathResolver,
-            $this->container,
-            $applicationUrl
-        );
-
-        $this->assertEquals($expectedApplicationUrl, $plugin->getApplicationUrl());
-    }
-
-    public function applicationUrlProvider(): array
-    {
-        return [
-            ['http://php-censor.localhost/', 'http://php-censor.localhost/'],
-            ['http://php-censor.localhost', 'http://php-censor.localhost/'],
-            ['http://php-censor.localhost///', 'http://php-censor.localhost/'],
-        ];
     }
 }

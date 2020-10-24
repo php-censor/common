@@ -28,4 +28,9 @@ interface ProjectInterface
      * @return array
      */
     public function getConfig(): array;
+
+    /**
+     * @return string
+     */
+    public function getLink(): string;
 }

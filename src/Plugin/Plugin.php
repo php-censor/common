@@ -108,13 +108,6 @@ abstract class Plugin implements PluginInterface
     protected $binaryNames = [];
 
     /**
-     * Base application URL. For example: 'https://php-censor.localhost'.
-     *
-     * @var string
-     */
-    protected $applicationUrl;
-
-    /**
      * @param BuildInterface                $build
      * @param ProjectInterface              $project
      * @param BuildLoggerInterface          $buildLogger
@@ -124,7 +117,6 @@ abstract class Plugin implements PluginInterface
      * @param VariableInterpolatorInterface $variableInterpolator
      * @param PathResolverInterface         $pathResolver
      * @param ContainerInterface            $container
-     * @param string                        $applicationUrl
      *
      * @throws \Throwable
      */
@@ -137,8 +129,7 @@ abstract class Plugin implements PluginInterface
         CommandExecutorInterface $commandExecutor,
         VariableInterpolatorInterface $variableInterpolator,
         PathResolverInterface $pathResolver,
-        ContainerInterface $container,
-        string $applicationUrl
+        ContainerInterface $container
     ) {
         $this->build                = $build;
         $this->project              = $project;
@@ -149,8 +140,6 @@ abstract class Plugin implements PluginInterface
         $this->variableInterpolator = $variableInterpolator;
         $this->pathResolver         = $pathResolver;
         $this->container            = $container;
-
-        $this->applicationUrl = \rtrim($applicationUrl, "/") . '/';
 
         $this->initOptions();
         $this->initBuildSettings();

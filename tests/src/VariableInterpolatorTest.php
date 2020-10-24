@@ -126,6 +126,11 @@ class VariableInterpolatorBuild implements BuildInterface
     {
         return false;
     }
+
+    public function getLink(): string
+    {
+        return 'http://example.com/build/view/' . $this->getId();
+    }
 }
 
 class VariableInterpolatorProject implements ProjectInterface
@@ -144,6 +149,11 @@ class VariableInterpolatorProject implements ProjectInterface
     {
         return [];
     }
+
+    public function getLink(): string
+    {
+        return 'http://example.com/project/view/' . $this->getId();
+    }
 }
 
 class VariableInterpolatorTest extends TestCase
@@ -153,7 +163,6 @@ class VariableInterpolatorTest extends TestCase
         $interpolator = new VariableInterpolator(
             new VariableInterpolatorBuild(),
             new VariableInterpolatorProject(),
-            'http://example.com/',
             '1.0.0'
         );
 
@@ -166,7 +175,6 @@ class VariableInterpolatorTest extends TestCase
         $interpolator = new VariableInterpolator(
             new VariableInterpolatorBuild(),
             new VariableInterpolatorProject(),
-            'http://example.com',
             '1.0.0'
         );
 
@@ -205,7 +213,7 @@ Text with
 %BRANCH%,
 %BRANCH_LINK%,
 %ENVIRONMENT%,
-%APP_VERSION%
+%SYSTEM_VERSION%
 for testing.')
         );
 
@@ -224,7 +232,7 @@ for testing.')
         self::assertEquals('branch', \getenv('PHP_CENSOR_BRANCH'));
         self::assertEquals('branch_link', \getenv('PHP_CENSOR_BRANCH_LINK'));
         self::assertEquals('environment', \getenv('PHP_CENSOR_ENVIRONMENT'));
-        self::assertEquals('1.0.0', \getenv('PHP_CENSOR_APP_VERSION'));
+        self::assertEquals('1.0.0', \getenv('PHP_CENSOR_SYSTEM_VERSION'));
     }
 
     public function testRealtimeInterpolate()
@@ -232,7 +240,6 @@ for testing.')
         $interpolator = new VariableInterpolator(
             new VariableInterpolatorBuild(),
             new VariableInterpolatorProject(),
-            'http://example.com',
             '1.0.0'
         );
 
@@ -257,7 +264,6 @@ for testing.')
         $interpolator = new VariableInterpolator(
             new VariableInterpolatorBuild(),
             new VariableInterpolatorProject(),
-            'http://example.com/',
             '1.0.0'
         );
 
