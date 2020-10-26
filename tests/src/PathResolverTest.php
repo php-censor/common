@@ -9,22 +9,23 @@ use PHPCensor\Common\Build\BuildLoggerInterface;
 use PHPCensor\Common\PathResolver;
 use PHPCensor\Common\PathResolverInterface;
 use PHPCensor\Common\VariableInterpolatorInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class PathResolverTest extends TestCase
 {
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject | BuildInterface
+     * @var MockObject | BuildInterface
      */
     private $build;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject | BuildLoggerInterface
+     * @var MockObject | BuildLoggerInterface
      */
     private $buildLogger;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject | VariableInterpolatorInterface
+     * @var MockObject | VariableInterpolatorInterface
      */
     private $variableInterpolator;
 

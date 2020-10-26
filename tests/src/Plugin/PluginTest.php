@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Tests\PHPCensor\Common\Plugin;
 
+use PHPCensor\Common\Application\ApplicationInterface;
 use PHPCensor\Common\Build\BuildErrorWriterInterface;
 use PHPCensor\Common\Build\BuildInterface;
 use PHPCensor\Common\Build\BuildLoggerInterface;
@@ -14,6 +15,7 @@ use PHPCensor\Common\Plugin\Plugin;
 use PHPCensor\Common\Plugin\Plugin\ParameterBag;
 use PHPCensor\Common\Project\ProjectInterface;
 use PHPCensor\Common\VariableInterpolatorInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 
@@ -76,47 +78,52 @@ class SimplePluginWithBinaryNames extends SimplePlugin
 class PluginTest extends TestCase
 {
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|BuildInterface
+     * @var MockObject | BuildInterface
      */
     private $build;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|ProjectInterface
+     * @var MockObject | ProjectInterface
      */
     private $project;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|BuildLoggerInterface
+     * @var MockObject | ApplicationInterface
+     */
+    private $application;
+
+    /**
+     * @var MockObject | BuildLoggerInterface
      */
     private $buildLogger;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|BuildErrorWriterInterface
+     * @var MockObject | BuildErrorWriterInterface
      */
     private $buildErrorWriter;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|BuildMetaWriterInterface
+     * @var MockObject | BuildMetaWriterInterface
      */
     private $buildMetaWriter;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|CommandExecutorInterface
+     * @var MockObject | CommandExecutorInterface
      */
     private $commandExecutor;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|VariableInterpolatorInterface
+     * @var MockObject | VariableInterpolatorInterface
      */
     private $variableInterpolator;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|PathResolverInterface
+     * @var MockObject | PathResolverInterface
      */
     private $pathResolver;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|ContainerInterface
+     * @var MockObject | ContainerInterface
      */
     private $container;
 
@@ -156,6 +163,7 @@ class PluginTest extends TestCase
         $this->buildMetaWriter  = $this->createMock(BuildMetaWriterInterface::class);
         $this->commandExecutor  = $this->createMock(CommandExecutorInterface::class);
         $this->pathResolver     = $this->createMock(PathResolverInterface::class);
+        $this->application      = $this->createMock(ApplicationInterface::class);
         $this->container        = $this->createMock(ContainerInterface::class);
     }
 
@@ -170,8 +178,8 @@ class PluginTest extends TestCase
             $this->commandExecutor,
             $this->variableInterpolator,
             $this->pathResolver,
-            $this->container,
-            'https://php-censor.localhost'
+            $this->application,
+            $this->container
         );
 
         $this->assertInstanceOf(SimplePlugin::class, $plugin);
@@ -191,8 +199,8 @@ class PluginTest extends TestCase
             $this->commandExecutor,
             $this->variableInterpolator,
             $this->pathResolver,
-            $this->container,
-            'https://php-censor.localhost'
+            $this->application,
+            $this->container
         );
 
         $this->assertEquals([], $plugin->getBuildSettings()->all());
@@ -213,8 +221,8 @@ class PluginTest extends TestCase
             $this->commandExecutor,
             $this->variableInterpolator,
             $this->pathResolver,
-            $this->container,
-            'https://php-censor.localhost'
+            $this->application,
+            $this->container
         );
 
         $this->assertEquals([], $plugin->getBuildSettings()->all());
@@ -244,8 +252,8 @@ class PluginTest extends TestCase
             $this->commandExecutor,
             $this->variableInterpolator,
             $this->pathResolver,
-            $this->container,
-            'https://php-censor.localhost'
+            $this->application,
+            $this->container
         );
 
         $this->assertEquals([
@@ -268,8 +276,8 @@ class PluginTest extends TestCase
             $this->commandExecutor,
             $this->variableInterpolator,
             $this->pathResolver,
-            $this->container,
-            'https://php-censor.localhost'
+            $this->application,
+            $this->container
         );
 
         $this->assertEquals([], $plugin->getOptions()->all());
@@ -290,8 +298,8 @@ class PluginTest extends TestCase
             $this->commandExecutor,
             $this->variableInterpolator,
             $this->pathResolver,
-            $this->container,
-            'https://php-censor.localhost'
+            $this->application,
+            $this->container
         );
 
         $this->assertEquals([], $plugin->getOptions()->all());
@@ -322,8 +330,8 @@ class PluginTest extends TestCase
             $this->commandExecutor,
             $this->variableInterpolator,
             $this->pathResolver,
-            $this->container,
-            'https://php-censor.localhost'
+            $this->application,
+            $this->container
         );
 
         $this->assertEquals([
@@ -355,8 +363,8 @@ class PluginTest extends TestCase
             $this->commandExecutor,
             $this->variableInterpolator,
             $this->pathResolver,
-            $this->container,
-            'https://php-censor.localhost'
+            $this->application,
+            $this->container
         );
 
         $this->assertEquals([
@@ -377,8 +385,8 @@ class PluginTest extends TestCase
             $this->commandExecutor,
             $this->variableInterpolator,
             $this->pathResolver,
-            $this->container,
-            'https://php-censor.localhost'
+            $this->application,
+            $this->container
         );
 
         $this->assertEquals([], $plugin->getBinaryNames());
@@ -395,8 +403,8 @@ class PluginTest extends TestCase
             $this->commandExecutor,
             $this->variableInterpolator,
             $this->pathResolver,
-            $this->container,
-            'https://php-censor.localhost'
+            $this->application,
+            $this->container
         );
 
         $this->assertEquals(['executable', 'executable.phar'], $plugin->getBinaryNames());
@@ -422,8 +430,8 @@ class PluginTest extends TestCase
             $this->commandExecutor,
             $this->variableInterpolator,
             $this->pathResolver,
-            $this->container,
-            'https://php-censor.localhost'
+            $this->application,
+            $this->container
         );
 
         $this->assertEquals([
@@ -450,8 +458,8 @@ class PluginTest extends TestCase
             $this->commandExecutor,
             $this->variableInterpolator,
             $this->pathResolver,
-            $this->container,
-            'https://php-censor.localhost'
+            $this->application,
+            $this->container
         );
 
         $this->assertEquals([
@@ -486,8 +494,8 @@ class PluginTest extends TestCase
             $this->commandExecutor,
             $this->variableInterpolator,
             $this->pathResolver,
-            $this->container,
-            'https://php-censor.localhost'
+            $this->application,
+            $this->container
         );
 
         $this->assertEquals([

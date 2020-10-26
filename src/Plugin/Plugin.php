@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace PHPCensor\Common\Plugin;
 
+use PHPCensor\Common\Application\ApplicationInterface;
 use PHPCensor\Common\Build\BuildErrorWriterInterface;
 use PHPCensor\Common\Build\BuildInterface;
 use PHPCensor\Common\Build\BuildLoggerInterface;
@@ -32,6 +33,11 @@ abstract class Plugin implements PluginInterface
      * @var ProjectInterface
      */
     protected $project;
+
+    /**
+     * @var ApplicationInterface
+     */
+    protected $application;
 
     /**
      * @var BuildLoggerInterface
@@ -116,6 +122,7 @@ abstract class Plugin implements PluginInterface
      * @param CommandExecutorInterface      $commandExecutor
      * @param VariableInterpolatorInterface $variableInterpolator
      * @param PathResolverInterface         $pathResolver
+     * @param ApplicationInterface          $application
      * @param ContainerInterface            $container
      *
      * @throws \Throwable
@@ -129,6 +136,7 @@ abstract class Plugin implements PluginInterface
         CommandExecutorInterface $commandExecutor,
         VariableInterpolatorInterface $variableInterpolator,
         PathResolverInterface $pathResolver,
+        ApplicationInterface $application,
         ContainerInterface $container
     ) {
         $this->build                = $build;
@@ -139,6 +147,7 @@ abstract class Plugin implements PluginInterface
         $this->commandExecutor      = $commandExecutor;
         $this->variableInterpolator = $variableInterpolator;
         $this->pathResolver         = $pathResolver;
+        $this->application          = $application;
         $this->container            = $container;
 
         $this->initOptions();
