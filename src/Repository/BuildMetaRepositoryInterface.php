@@ -16,12 +16,14 @@ interface BuildMetaRepositoryInterface
 {
     /**
      * @param int    $buildId
+     * @param string $plugin
      * @param string $key
      *
      * @return BuildMetaInterface|null
      */
-    public function getOneByBuildIdAndKey(
+    public function getOneByBuildIdAndPluginAndKey(
         int $buildId,
+        string $plugin,
         string $key
     ): ?BuildMetaInterface;
 }

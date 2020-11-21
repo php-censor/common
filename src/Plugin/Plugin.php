@@ -114,6 +114,26 @@ abstract class Plugin implements PluginInterface
     protected $binaryNames = [];
 
     /**
+     * @var string
+     */
+    protected $artifactsPluginPath;
+
+    /**
+     * @var string
+     */
+    protected $artifactsPluginBranchPath;
+
+    /**
+     * @var string
+     */
+    protected $artifactsPluginLink;
+
+    /**
+     * @var string
+     */
+    protected $artifactsPluginBranchLink;
+
+    /**
      * @param BuildInterface                $build
      * @param ProjectInterface              $project
      * @param BuildLoggerInterface          $buildLogger
@@ -163,6 +183,34 @@ abstract class Plugin implements PluginInterface
 
         $this->binaryPath = $this->pathResolver->resolveBinaryPath(
             (string)$this->options->get('binary_path', '')
+        );
+
+        $this->artifactsPluginPath = \sprintf(
+            '%s%s/%s/',
+            $this->application->getArtifactsPath(),
+            static::getName(),
+            $this->build->getBuildDirectory()
+        );
+
+        $this->artifactsPluginBranchPath = \sprintf(
+            '%s%s/%s/',
+            $this->application->getArtifactsPath(),
+            static::getName(),
+            $this->build->getBuildBranchDirectory()
+        );
+
+        $this->artifactsPluginLink = \sprintf(
+            '%s%s/%s',
+            $this->application->getArtifactsLink(),
+            static::getName(),
+            $this->build->getBuildDirectory()
+        );
+
+        $this->artifactsPluginBranchLink = \sprintf(
+            '%s%s/%s',
+            $this->application->getArtifactsLink(),
+            static::getName(),
+            $this->build->getBuildBranchDirectory()
         );
 
         $this->initBinaryNames();
@@ -257,5 +305,53 @@ abstract class Plugin implements PluginInterface
     protected function getPluginDefaultBinaryNames(): array
     {
         return [];
+    }
+
+    /**
+     * @param string $file
+     *
+     * @return string
+     */
+    protected function getArtifactPath(string $file = ''): string
+    {
+        return \sprintf('%s%s', $this->artifactsPluginPath, $file);
+    }
+
+    /**
+     * @param string $file
+     *
+     * @return string
+     */
+    protected function getArtifactPathForBranch(string $file = ''): string
+    {
+        return \sprintf('%s%s', $this->artifactsPluginBranchPath, $file);
+    }
+
+    /**
+     * @param string $file
+     *
+     * @return string
+     */
+    protected function getArtifactLink(string $file = ''): string
+    {
+        if ($file) {
+            return \sprintf('%s/%s', $this->artifactsPluginLink, $file);
+        }
+
+        return $this->artifactsPluginLink;
+    }
+
+    /**
+     * @param string $file
+     *
+     * @return string
+     */
+    protected function getArtifactLinkForBranch(string $file = ''): string
+    {
+        if ($file) {
+            return \sprintf('%s/%s', $this->artifactsPluginBranchLink, $file);
+        }
+
+        return $this->artifactsPluginBranchLink;
     }
 }

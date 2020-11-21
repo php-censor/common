@@ -12,4 +12,13 @@ namespace PHPCensor\Common\Build;
  */
 interface BuildMetaInterface
 {
+    /**
+     * @return string
+     */
+    public function getKey(): string;
+
+    /**
+     * @return mixed
+     */
+    public function getValue();
 }
