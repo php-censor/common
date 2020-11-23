@@ -12,6 +12,13 @@ namespace PHPCensor\Common\Build;
  */
 interface BuildMetaInterface
 {
+    public const KEY_DATA     = 'data';
+    public const KEY_META     = 'meta';
+    public const KEY_ERRORS   = 'errors';
+    public const KEY_WARNINGS = 'warnings';
+    public const KEY_COVERAGE = 'coverage';
+    public const KEY_SUMMARY  = 'summary';
+
     /**
      * @return string
      */
