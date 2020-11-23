@@ -20,14 +20,14 @@ interface BuildMetaWriterInterface
     public const KEY_SUMMARY  = 'summary';
 
     /**
-     * @param int    $buildId
-     * @param string $plugin
-     * @param string $key
-     * @param mixed  $value
+     * @param int         $buildId
+     * @param string|null $plugin
+     * @param string      $key
+     * @param mixed       $value
      */
     public function write(
         int $buildId,
-        string $plugin,
+        ?string $plugin,
         string $key,
         $value
     ): void;

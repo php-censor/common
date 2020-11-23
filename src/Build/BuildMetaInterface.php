@@ -21,4 +21,9 @@ interface BuildMetaInterface
      * @return mixed
      */
     public function getValue();
+
+    /**
+     * @return string|null
+     */
+    public function getPlugin(): ?string;
 }
