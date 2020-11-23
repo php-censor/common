@@ -17,6 +17,7 @@ interface BuildMetaWriterInterface
     public const KEY_ERRORS   = 'errors';
     public const KEY_WARNINGS = 'warnings';
     public const KEY_COVERAGE = 'coverage';
+    public const KEY_SUMMARY  = 'summary';
 
     /**
      * @param int    $buildId
