@@ -53,6 +53,9 @@ class SimplePlugin extends Plugin
         return $this->options;
     }
 
+    /**
+     * @return array
+     */
     public function getBinaryNames(): array
     {
         return $this->binaryNames;
@@ -64,6 +67,38 @@ class SimplePlugin extends Plugin
     public function execute(): bool
     {
         return true;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getArtifactPath(string $file = ''): string
+    {
+        return parent::getArtifactPath($file);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getArtifactPathForBranch(string $file = ''): string
+    {
+        return parent::getArtifactPathForBranch($file);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getArtifactLink(string $file = ''): string
+    {
+        return parent::getArtifactLink($file);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getArtifactLinkForBranch(string $file = ''): string
+    {
+        return parent::getArtifactLinkForBranch($file);
     }
 }
 
@@ -521,5 +556,23 @@ class PluginTest extends TestCase
         $this->assertFalse(SimplePlugin::canExecute(BuildInterface::STAGE_FAILURE, $this->build));
         $this->assertFalse(SimplePlugin::canExecute(BuildInterface::STAGE_BROKEN, $this->build));
         $this->assertFalse(SimplePlugin::canExecute(BuildInterface::STAGE_TEST, $this->build));
+    }
+
+    public function testGetArtifactPath()
+    {
+        $plugin = new SimplePluginWithBinaryNames(
+            $this->build,
+            $this->project,
+            $this->buildLogger,
+            $this->buildErrorWriter,
+            $this->buildMetaWriter,
+            $this->commandExecutor,
+            $this->variableInterpolator,
+            $this->pathResolver,
+            $this->application,
+            $this->container
+        );
+
+        $this->assertEquals('', $plugin->getArtifactPath('example.html'));
     }
 }

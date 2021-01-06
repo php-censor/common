@@ -20,6 +20,20 @@ interface ApplicationInterface
     public function getConfig(): array;
 
     /**
+     * Example: /var/www/php-censor.local/
+     *
+     * @return string
+     */
+    public function getRootPath(): string;
+
+    /**
+     * Application config option: php-censor.build.allow_public_artifacts
+     *
+     * @return bool
+     */
+    public function isPublicArtifactsAllowed(): bool;
+
+    /**
      * Example: http://php-censor.local/artifacts/
      *
      * @return string

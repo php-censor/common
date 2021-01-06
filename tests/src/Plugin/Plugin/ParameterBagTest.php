@@ -22,44 +22,90 @@ class ParameterBagTest extends TestCase
     {
         $parameterBag = new ParameterBag([
             'foo'   => 'bar',
-            'hello' => 'world',
+            'foo_1' => [
+                'foo_2' => 'bar_2',
+            ],
+            'null'   => null,
+            'null_1' => [
+                'null_2' => null,
+            ],
         ]);
 
         $this->assertEquals([
             'foo'   => 'bar',
-            'hello' => 'world',
+            'foo_1' => [
+                'foo_2' => 'bar_2',
+            ],
+            'null'   => null,
+            'null_1' => [
+                'null_2' => null,
+            ],
         ], $parameterBag->all());
     }
 
     public function testGet()
     {
         $parameterBag = new ParameterBag([
-            'foo'  => 'bar',
-            'null' => null,
+            'foo'   => 'bar',
+            'foo_1' => [
+                'foo_2' => 'bar_2',
+            ],
+            'null'   => null,
+            'null_1' => [
+                'null_2' => null,
+            ],
         ]);
 
         $this->assertEquals('bar', $parameterBag->get('foo'));
+        $this->assertEquals('bar_2', $parameterBag->get('foo_1.foo_2'));
+
         $this->assertEquals('default', $parameterBag->get('unknown', 'default'));
+        $this->assertEquals('default_2', $parameterBag->get('foo_1.unknown', 'default_2'));
+
         $this->assertNull($parameterBag->get('unknown'));
+        $this->assertNull($parameterBag->get('foo_1.unknown'));
+
+        $this->assertNull($parameterBag->get('unknown', null));
+        $this->assertNull($parameterBag->get('foo_1.unknown', null));
+
         $this->assertNull($parameterBag->get('null', 'default'));
+        $this->assertNull($parameterBag->get('null_1.null_2', 'default_2'));
     }
 
     public function testHas()
     {
         $parameterBag = new ParameterBag([
-            'foo'  => 'bar',
-            'null' => null,
+            'foo'   => 'bar',
+            'foo_1' => [
+                'foo_2' => 'bar_2',
+            ],
+            'null'   => null,
+            'null_1' => [
+                'null_2' => null,
+            ],
         ]);
 
         $this->assertTrue($parameterBag->has('foo'));
-        $this->assertFalse($parameterBag->has('bar'));
+        $this->assertTrue($parameterBag->has('foo_1.foo_2'));
+
+        $this->assertTrue($parameterBag->has('null'));
+        $this->assertTrue($parameterBag->has('null_1.null_2'));
+
+        $this->assertFalse($parameterBag->has('unknown'));
+        $this->assertFalse($parameterBag->has('foo_1.unknown'));
     }
 
     public function testGetIterator()
     {
         $parameters = [
             'foo'   => 'bar',
-            'hello' => 'world',
+            'foo_1' => [
+                'foo_2' => 'bar_2',
+            ],
+            'null'   => null,
+            'null_1' => [
+                'null_2' => null,
+            ],
         ];
         $parameterBag = new ParameterBag($parameters);
 
@@ -76,7 +122,13 @@ class ParameterBagTest extends TestCase
     {
         $parameters = [
             'foo'   => 'bar',
-            'hello' => 'world',
+            'foo_1' => [
+                'foo_2' => 'bar_2',
+            ],
+            'null'   => null,
+            'null_1' => [
+                'null_2' => null,
+            ],
         ];
         $parameterBag = new ParameterBag($parameters);
 

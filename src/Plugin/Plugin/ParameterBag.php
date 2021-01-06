@@ -33,9 +33,20 @@ class ParameterBag implements \IteratorAggregate, \Countable
      */
     public function get(string $key, $default = null)
     {
-        return \array_key_exists($key, $this->parameters)
-            ? $this->parameters[$key]
-            : $default;
+        if (\array_key_exists($key, $this->parameters)) {
+            return $this->parameters[$key];
+        }
+
+        $parametersPart = $this->parameters;
+        foreach (\explode('.', $key) as $keyPart) {
+            if (\array_key_exists($keyPart, $parametersPart)) {
+                $parametersPart = $parametersPart[$keyPart];
+            } else {
+                return $default;
+            }
+        }
+
+        return $parametersPart;
     }
 
     /**
@@ -45,7 +56,20 @@ class ParameterBag implements \IteratorAggregate, \Countable
      */
     public function has(string $key): bool
     {
-        return \array_key_exists($key, $this->parameters);
+        if (\array_key_exists($key, $this->parameters)) {
+            return true;
+        }
+
+        $parametersPart = $this->parameters;
+        foreach (\explode('.', $key) as $keyPart) {
+            if (\array_key_exists($keyPart, $parametersPart)) {
+                $parametersPart = $parametersPart[$keyPart];
+            } else {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**

@@ -308,26 +308,35 @@ abstract class Plugin implements PluginInterface
     }
 
     /**
+     * Example: /var/www/php-censor.local/public/artifacts/phpunit/2/10_xxxxxxxx/
+     * Where: Project Id: 2, Build Id: 10
+     *
      * @param string $file
      *
      * @return string
      */
     protected function getArtifactPath(string $file = ''): string
     {
-        return \sprintf('%s%s', $this->artifactsPluginPath, $file);
+        return \sprintf('%s%s/', $this->artifactsPluginPath, $file);
     }
 
     /**
+     * Example: /var/www/php-censor.local/public/artifacts/phpunit/2/master_xxxxxxxx/
+     * Where: Project Id: 2, Branch: "master"
+     *
      * @param string $file
      *
      * @return string
      */
     protected function getArtifactPathForBranch(string $file = ''): string
     {
-        return \sprintf('%s%s', $this->artifactsPluginBranchPath, $file);
+        return \sprintf('%s%s/', $this->artifactsPluginBranchPath, $file);
     }
 
     /**
+     * Example: http://php-censor.local/artifacts/phpunit/2/10_xxxxxxxx
+     * Where: Project Id: 2, Build Id: 10
+     *
      * @param string $file
      *
      * @return string
@@ -342,6 +351,9 @@ abstract class Plugin implements PluginInterface
     }
 
     /**
+     * Example: http://php-censor.local/artifacts/phpunit/2/master_xxxxxxxx
+     * Where: Project Id: 2, Branch: "master"
+     *
      * @param string $file
      *
      * @return string
