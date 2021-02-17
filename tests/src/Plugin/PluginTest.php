@@ -29,25 +29,16 @@ class SimplePlugin extends Plugin
         return 'simple_plugin';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBuild(): BuildInterface
     {
         return $this->build;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBuildSettings(): ParameterBag
     {
         return $this->buildSettings;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getOptions(): ParameterBag
     {
         return $this->options;
@@ -165,7 +156,7 @@ class PluginTest extends TestCase
     /**
      * @var string
      */
-    private $buildPath;
+    private string $buildPath;
 
     public function setUp()
     {
@@ -560,6 +551,15 @@ class PluginTest extends TestCase
 
     public function testGetArtifactPath()
     {
+        $this->application = $this->createMock(ApplicationInterface::class);
+        $this->application
+            ->method('getArtifactsPath')
+            ->willReturn('/var/www/php-censor.localhost/public/artifacts/');
+
+        $this->build
+            ->method('getBuildDirectory')
+            ->willReturn('2/10_xxxxxx');
+
         $plugin = new SimplePluginWithBinaryNames(
             $this->build,
             $this->project,
@@ -573,6 +573,119 @@ class PluginTest extends TestCase
             $this->container
         );
 
-        $this->assertEquals('', $plugin->getArtifactPath('example.html'));
+        $this->assertEquals(
+            '/var/www/php-censor.localhost/public/artifacts/simple_plugin/2/10_xxxxxx/example.html',
+            $plugin->getArtifactPath('example.html')
+        );
+
+        $this->assertEquals(
+            '/var/www/php-censor.localhost/public/artifacts/simple_plugin/2/10_xxxxxx',
+            $plugin->getArtifactPath()
+        );
+    }
+
+    public function testGetArtifactPathForBranch()
+    {
+        $this->application = $this->createMock(ApplicationInterface::class);
+        $this->application
+            ->method('getArtifactsPath')
+            ->willReturn('/var/www/php-censor.localhost/public/artifacts/');
+
+        $this->build
+            ->method('getBuildBranchDirectory')
+            ->willReturn('2/master_xxxxxx');
+
+        $plugin = new SimplePluginWithBinaryNames(
+            $this->build,
+            $this->project,
+            $this->buildLogger,
+            $this->buildErrorWriter,
+            $this->buildMetaWriter,
+            $this->commandExecutor,
+            $this->variableInterpolator,
+            $this->pathResolver,
+            $this->application,
+            $this->container
+        );
+
+        $this->assertEquals(
+            '/var/www/php-censor.localhost/public/artifacts/simple_plugin/2/master_xxxxxx/example.html',
+            $plugin->getArtifactPathForBranch('example.html')
+        );
+
+        $this->assertEquals(
+            '/var/www/php-censor.localhost/public/artifacts/simple_plugin/2/master_xxxxxx',
+            $plugin->getArtifactPathForBranch()
+        );
+    }
+
+    public function testGetArtifactLink()
+    {
+        $this->application = $this->createMock(ApplicationInterface::class);
+        $this->application
+            ->method('getArtifactsLink')
+            ->willReturn('https://php-censor.localhost/artifacts/');
+
+        $this->build
+            ->method('getBuildDirectory')
+            ->willReturn('2/10_xxxxxx');
+
+        $plugin = new SimplePluginWithBinaryNames(
+            $this->build,
+            $this->project,
+            $this->buildLogger,
+            $this->buildErrorWriter,
+            $this->buildMetaWriter,
+            $this->commandExecutor,
+            $this->variableInterpolator,
+            $this->pathResolver,
+            $this->application,
+            $this->container
+        );
+
+        $this->assertEquals(
+            'https://php-censor.localhost/artifacts/simple_plugin/2/10_xxxxxx/example.html',
+            $plugin->getArtifactLink('example.html')
+        );
+
+        $this->assertEquals(
+            'https://php-censor.localhost/artifacts/simple_plugin/2/10_xxxxxx',
+            $plugin->getArtifactLink()
+        );
+    }
+
+    public function testGetArtifactLinkForBranch()
+    {
+        $this->application = $this->createMock(ApplicationInterface::class);
+        $this->application
+            ->method('getArtifactsLink')
+            ->willReturn('https://php-censor.localhost/artifacts/');
+
+        $this->build
+            ->method('getBuildBranchDirectory')
+            ->willReturn('2/master_xxxxxx');
+
+        $plugin = new SimplePluginWithBinaryNames(
+            $this->build,
+            $this->project,
+            $this->buildLogger,
+            $this->buildErrorWriter,
+            $this->buildMetaWriter,
+            $this->commandExecutor,
+            $this->variableInterpolator,
+            $this->pathResolver,
+            $this->application,
+            $this->container
+        );
+
+        $this->assertEquals(
+            'https://php-censor.localhost/artifacts/simple_plugin/2/master_xxxxxx/example.html',
+            $plugin->getArtifactLinkForBranch('example.html')
+        );
+
+        $this->assertEquals(
+            'https://php-censor.localhost/artifacts/simple_plugin/2/master_xxxxxx',
+            $plugin->getArtifactLinkForBranch()
+        );
     }
 }

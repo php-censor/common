@@ -32,17 +32,17 @@ class PathResolverTest extends TestCase
     /**
      * @var string
      */
-    private $buildPath;
+    private string $buildPath;
 
     /**
      * @var string
      */
-    private $alternativeBuildPath;
+    private string $alternativeBuildPath;
 
     /**
      * @var string
      */
-    private $rootDirectory;
+    private string $rootDirectory;
 
     public function setUp()
     {

@@ -18,7 +18,7 @@ class VariableInterpolator implements VariableInterpolatorInterface
     /**
      * @var array
      */
-    private $variables = [];
+    private array $variables = [];
 
     /**
      * @param BuildInterface   $build

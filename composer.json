@@ -13,7 +13,7 @@
         "ci",
         "continuous integration"
     ],
-    "homepage": "http://php-censor.info",
+    "homepage": "https://php-censor.info",
     "license": "BSD-2-Clause",
     "authors": [
         {
@@ -38,7 +38,7 @@
         }
     },
     "require": {
-        "php":           ">=7.1.0",
+        "php":           ">=7.4.0",
         "ext-json":      "*",
         "psr/container": "^1.0"
     },
@@ -50,7 +50,7 @@
     },
     "extra": {
         "platform": {
-            "php": "7.1.*"
+            "php": "7.4.*"
         }
     }
 }

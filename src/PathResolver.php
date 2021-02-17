@@ -19,37 +19,37 @@ class PathResolver implements PathResolverInterface
     /**
      * @var BuildInterface
      */
-    private $build;
+    private BuildInterface $build;
 
     /**
      * @var BuildLoggerInterface
      */
-    private $buildLogger;
+    private BuildLoggerInterface $buildLogger;
 
     /**
      * @var VariableInterpolatorInterface
      */
-    private $variableInterpolator;
+    private VariableInterpolatorInterface $variableInterpolator;
 
     /**
      * @var ParameterBag
      */
-    protected $buildSettings;
+    protected ParameterBag $buildSettings;
 
     /**
      * @var string|null
      */
-    private $buildDirectory = null;
+    private ?string $buildDirectory = null;
 
     /**
      * @var string|null
      */
-    private $buildBinaryPath = null;
+    private ?string $buildBinaryPath = null;
 
     /**
      * @var string[]|null
      */
-    private $buildIgnores = null;
+    private ?array $buildIgnores = null;
 
     /**
      * @param BuildInterface                $build

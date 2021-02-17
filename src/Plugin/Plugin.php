@@ -27,62 +27,62 @@ abstract class Plugin implements PluginInterface
     /**
      * @var BuildInterface
      */
-    protected $build;
+    protected BuildInterface $build;
 
     /**
      * @var ProjectInterface
      */
-    protected $project;
+    protected ProjectInterface $project;
 
     /**
      * @var ApplicationInterface
      */
-    protected $application;
+    protected ApplicationInterface $application;
 
     /**
      * @var BuildLoggerInterface
      */
-    protected $buildLogger;
+    protected BuildLoggerInterface $buildLogger;
 
     /**
      * @var BuildErrorWriterInterface
      */
-    protected $buildErrorWriter;
+    protected BuildErrorWriterInterface $buildErrorWriter;
 
     /**
      * @var BuildMetaWriterInterface
      */
-    protected $buildMetaWriter;
+    protected BuildMetaWriterInterface $buildMetaWriter;
 
     /**
      * @var CommandExecutorInterface
      */
-    protected $commandExecutor;
+    protected CommandExecutorInterface $commandExecutor;
 
     /**
      * @var VariableInterpolatorInterface
      */
-    protected $variableInterpolator;
+    protected VariableInterpolatorInterface $variableInterpolator;
 
     /**
      * @var PathResolverInterface
      */
-    protected $pathResolver;
+    protected PathResolverInterface $pathResolver;
 
     /**
      * @var ContainerInterface
      */
-    protected $container;
+    protected ContainerInterface $container;
 
     /**
      * @var ParameterBag
      */
-    protected $options;
+    protected ParameterBag $options;
 
     /**
      * @var ParameterBag
      */
-    protected $buildSettings;
+    protected ParameterBag $buildSettings;
 
     /**
      * Working directory for plugin (Directory with files for inspecting or directory with tests).
@@ -90,48 +90,48 @@ abstract class Plugin implements PluginInterface
      *
      * @var string
      */
-    protected $directory;
+    protected string $directory;
 
     /**
      * Array of ignoring files and directories. For example: ['.gitkeep', 'tests'].
      *
      * @var string[]
      */
-    protected $ignores;
+    protected array $ignores;
 
     /**
      * Path for searching plugin binary (executable). For example: '/home/user/bin/'.
      *
      * @var string
      */
-    protected $binaryPath;
+    protected string $binaryPath;
 
     /**
      * Names of the binary (executable) for searching in the binary path or in the build directory.
      *
      * @var array
      */
-    protected $binaryNames = [];
+    protected array $binaryNames = [];
 
     /**
      * @var string
      */
-    protected $artifactsPluginPath;
+    protected string $artifactsPluginPath;
 
     /**
      * @var string
      */
-    protected $artifactsPluginBranchPath;
+    protected string $artifactsPluginBranchPath;
 
     /**
      * @var string
      */
-    protected $artifactsPluginLink;
+    protected string $artifactsPluginLink;
 
     /**
      * @var string
      */
-    protected $artifactsPluginBranchLink;
+    protected string $artifactsPluginBranchLink;
 
     /**
      * @param BuildInterface                $build
@@ -185,6 +185,10 @@ abstract class Plugin implements PluginInterface
             (string)$this->options->get('binary_path', '')
         );
 
+        /**
+         * Example: /var/www/php-censor.localhost/public/artifacts/phpunit/2/10_xxxxxxxx/
+         * Where: Project Id: 2, Build Id: 10
+         */
         $this->artifactsPluginPath = \sprintf(
             '%s%s/%s/',
             $this->application->getArtifactsPath(),
@@ -192,6 +196,10 @@ abstract class Plugin implements PluginInterface
             $this->build->getBuildDirectory()
         );
 
+        /**
+         * Example: /var/www/php-censor.localhost/public/artifacts/phpunit/2/master_xxxxxxxx/
+         * Where: Project Id: 2, Branch: "master"
+         */
         $this->artifactsPluginBranchPath = \sprintf(
             '%s%s/%s/',
             $this->application->getArtifactsPath(),
@@ -199,6 +207,10 @@ abstract class Plugin implements PluginInterface
             $this->build->getBuildBranchDirectory()
         );
 
+        /**
+         * Example: https://php-censor.localhost/artifacts/phpunit/2/10_xxxxxxxx
+         * Where: Project Id: 2, Build Id: 10
+         */
         $this->artifactsPluginLink = \sprintf(
             '%s%s/%s',
             $this->application->getArtifactsLink(),
@@ -206,6 +218,10 @@ abstract class Plugin implements PluginInterface
             $this->build->getBuildDirectory()
         );
 
+        /**
+         * Example: https://php-censor.localhost/artifacts/phpunit/2/master_xxxxxxxx
+         * Where: Project Id: 2, Branch: "master"
+         */
         $this->artifactsPluginBranchLink = \sprintf(
             '%s%s/%s',
             $this->application->getArtifactsLink(),
@@ -308,8 +324,8 @@ abstract class Plugin implements PluginInterface
     }
 
     /**
-     * Example: /var/www/php-censor.local/public/artifacts/phpunit/2/10_xxxxxxxx/
-     * Where: Project Id: 2, Build Id: 10
+     * Example: /var/www/php-censor.localhost/public/artifacts/phpunit/2/10_xxxxxxxx/report.xml
+     * Where: Project Id: 2, Build Id: 10, File: report.xml
      *
      * @param string $file
      *
@@ -317,12 +333,12 @@ abstract class Plugin implements PluginInterface
      */
     protected function getArtifactPath(string $file = ''): string
     {
-        return \sprintf('%s%s/', $this->artifactsPluginPath, $file);
+        return \rtrim(\sprintf('%s%s', $this->artifactsPluginPath, $file), '/');
     }
 
     /**
-     * Example: /var/www/php-censor.local/public/artifacts/phpunit/2/master_xxxxxxxx/
-     * Where: Project Id: 2, Branch: "master"
+     * Example: /var/www/php-censor.localhost/public/artifacts/phpunit/2/master_xxxxxxxx/report.xml
+     * Where: Project Id: 2, Branch: "master", File: report.xml
      *
      * @param string $file
      *
@@ -330,12 +346,12 @@ abstract class Plugin implements PluginInterface
      */
     protected function getArtifactPathForBranch(string $file = ''): string
     {
-        return \sprintf('%s%s/', $this->artifactsPluginBranchPath, $file);
+        return \rtrim(\sprintf('%s%s', $this->artifactsPluginBranchPath, $file), '/');
     }
 
     /**
-     * Example: http://php-censor.local/artifacts/phpunit/2/10_xxxxxxxx
-     * Where: Project Id: 2, Build Id: 10
+     * Example: https://php-censor.localhost/artifacts/phpunit/2/10_xxxxxxxx/report.xml
+     * Where: Project Id: 2, Build Id: 10, File: report.xml
      *
      * @param string $file
      *
@@ -351,8 +367,8 @@ abstract class Plugin implements PluginInterface
     }
 
     /**
-     * Example: http://php-censor.local/artifacts/phpunit/2/master_xxxxxxxx
-     * Where: Project Id: 2, Branch: "master"
+     * Example: https://php-censor.localhost/artifacts/phpunit/2/master_xxxxxxxx/report.xml
+     * Where: Project Id: 2, Branch: "master", File: report.xml
      *
      * @param string $file
      *

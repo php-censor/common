@@ -156,7 +156,7 @@ interface BuildInterface
     public function isDebug(): bool;
 
     /**
-     * Example: http://php-censor.local/build/view/1
+     * Example: http://php-censor.localhost/build/view/1
      *
      * @return string
      */
