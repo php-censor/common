@@ -65,8 +65,8 @@ class ParameterBagTest extends TestCase
         $this->assertNull($parameterBag->get('unknown'));
         $this->assertNull($parameterBag->get('foo_1.unknown'));
 
-        $this->assertNull($parameterBag->get('unknown', null));
-        $this->assertNull($parameterBag->get('foo_1.unknown', null));
+        $this->assertNull($parameterBag->get('unknown'));
+        $this->assertNull($parameterBag->get('foo_1.unknown'));
 
         $this->assertNull($parameterBag->get('null', 'default'));
         $this->assertNull($parameterBag->get('null_1.null_2', 'default_2'));

@@ -20,7 +20,7 @@ interface ApplicationInterface
     public function getConfig(): array;
 
     /**
-     * Example: /var/www/php-censor.local/
+     * Example: /var/www/php-censor.localhost/
      *
      * @return string
      */
@@ -34,14 +34,14 @@ interface ApplicationInterface
     public function isPublicArtifactsAllowed(): bool;
 
     /**
-     * Example: http://php-censor.local/artifacts/
+     * Example: https://php-censor.localhost/artifacts/
      *
      * @return string
      */
     public function getArtifactsLink(): string;
 
     /**
-     * Example: /var/www/php-censor.local/public/artifacts/
+     * Example: /var/www/php-censor.localhost/public/artifacts/
      *
      * @return string
      */
