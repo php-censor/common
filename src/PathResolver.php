@@ -6,7 +6,6 @@ namespace PHPCensor\Common;
 
 use PHPCensor\Common\Build\BuildInterface;
 use PHPCensor\Common\Build\BuildLoggerInterface;
-use PHPCensor\Common\Plugin\Plugin\ParameterBag;
 
 /**
  * @package    PHP Censor

@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace PHPCensor\Common\Plugin\Plugin;
+namespace PHPCensor\Common;
 
 /**
  * @package    PHP Censor
@@ -10,7 +10,7 @@ namespace PHPCensor\Common\Plugin\Plugin;
  *
  * @author Dmitry Khomutov <poisoncorpsee@gmail.com>
  */
-class ParameterBag implements \IteratorAggregate, \Countable
+class ParameterBag implements ParameterBagInterface, \IteratorAggregate, \Countable
 {
     /**
      * @var array
@@ -26,10 +26,7 @@ class ParameterBag implements \IteratorAggregate, \Countable
     }
 
     /**
-     * @param string $key
-     * @param mixed  $default
-     *
-     * @return mixed|null
+     * {@inheritdoc}
      */
     public function get(string $key, $default = null)
     {
@@ -50,9 +47,7 @@ class ParameterBag implements \IteratorAggregate, \Countable
     }
 
     /**
-     * @param string $key
-     *
-     * @return bool
+     * {@inheritdoc}
      */
     public function has(string $key): bool
     {
@@ -73,7 +68,7 @@ class ParameterBag implements \IteratorAggregate, \Countable
     }
 
     /**
-     * @return array
+     * {@inheritdoc}
      */
     public function all(): array
     {
@@ -81,7 +76,7 @@ class ParameterBag implements \IteratorAggregate, \Countable
     }
 
     /**
-     * @return \ArrayIterator
+     * {@inheritdoc}
      */
     public function getIterator(): \ArrayIterator
     {
@@ -89,7 +84,7 @@ class ParameterBag implements \IteratorAggregate, \Countable
     }
 
     /**
-     * @return int
+     * {@inheritdoc}
      */
     public function count(): int
     {
