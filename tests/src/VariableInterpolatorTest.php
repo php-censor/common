@@ -145,7 +145,7 @@ class VariableInterpolatorProject implements ProjectInterface
         return 'title';
     }
 
-    public function getConfig(): array
+    public function getBuildConfig(): array
     {
         return [];
     }

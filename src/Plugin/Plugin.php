@@ -256,7 +256,7 @@ abstract class Plugin implements PluginInterface
      */
     protected function initOptions(): void
     {
-        $projectConfig = $this->project->getConfig();
+        $projectConfig = $this->project->getBuildConfig();
 
         $pluginName         = $this->getName();
         $pluginOptionsArray = [];
@@ -271,7 +271,7 @@ abstract class Plugin implements PluginInterface
 
     protected function initBuildSettings(): void
     {
-        $projectConfig = $this->project->getConfig();
+        $projectConfig = $this->project->getBuildConfig();
 
         $buildSettingArray = [];
         if (!empty($projectConfig['build_settings'])) {

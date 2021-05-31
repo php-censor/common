@@ -174,7 +174,7 @@ class PluginTest extends TestCase
 
         $this->project = $this->createMock(ProjectInterface::class);
         $this->project
-            ->method('getConfig')
+            ->method('getBuildConfig')
             ->willReturn([]);
 
         $this->variableInterpolator = $this->createMock(VariableInterpolatorInterface::class);
@@ -233,7 +233,7 @@ class PluginTest extends TestCase
 
         $this->project = $this->createMock(ProjectInterface::class);
         $this->project
-            ->method('getConfig')
+            ->method('getBuildConfig')
             ->willReturn([
                 'build_settings' => [],
             ]);
@@ -258,7 +258,7 @@ class PluginTest extends TestCase
     {
         $this->project = $this->createMock(ProjectInterface::class);
         $this->project
-            ->method('getConfig')
+            ->method('getBuildConfig')
             ->willReturn([
                 'build_settings' => [
                     'option_1' => [
@@ -310,7 +310,7 @@ class PluginTest extends TestCase
 
         $this->project = $this->createMock(ProjectInterface::class);
         $this->project
-            ->method('getConfig')
+            ->method('getBuildConfig')
             ->willReturn([
                 'simple_plugin' => [],
             ]);
@@ -335,7 +335,7 @@ class PluginTest extends TestCase
     {
         $this->project = $this->createMock(ProjectInterface::class);
         $this->project
-            ->method('getConfig')
+            ->method('getBuildConfig')
             ->willReturn([
                 'simple_plugin' => [
                     'directory'   => 'directory',
@@ -371,7 +371,7 @@ class PluginTest extends TestCase
 
         $this->project = $this->createMock(ProjectInterface::class);
         $this->project
-            ->method('getConfig')
+            ->method('getBuildConfig')
             ->willReturn([
                 'simple_plugin' => [
                     'directory'   => 235,
@@ -440,7 +440,7 @@ class PluginTest extends TestCase
     {
         $this->project = $this->createMock(ProjectInterface::class);
         $this->project
-            ->method('getConfig')
+            ->method('getBuildConfig')
             ->willReturn([
                 'simple_plugin' => [
                     'binary_name' => 'exec',
@@ -468,7 +468,7 @@ class PluginTest extends TestCase
 
         $this->project = $this->createMock(ProjectInterface::class);
         $this->project
-            ->method('getConfig')
+            ->method('getBuildConfig')
             ->willReturn([
                 'simple_plugin' => [
                     'binary_name' => false,
@@ -498,7 +498,7 @@ class PluginTest extends TestCase
     {
         $this->project = $this->createMock(ProjectInterface::class);
         $this->project
-            ->method('getConfig')
+            ->method('getBuildConfig')
             ->willReturn([
                 'simple_plugin' => [
                     'binary_name' => [

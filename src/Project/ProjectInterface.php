@@ -27,7 +27,7 @@ interface ProjectInterface
      *
      * @return array
      */
-    public function getConfig(): array;
+    public function getBuildConfig(): array;
 
     /**
      * @return string
