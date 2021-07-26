@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace PHPCensor\Common\Application;
 
+use PHPCensor\Common\ConfigurationInterface;
+
 /**
  * @package    PHP Censor
  * @subpackage Common Library
@@ -15,9 +17,9 @@ interface ApplicationInterface
     /**
      * Returns system (application) configuration.
      *
-     * @return array
+     * @return ConfigurationInterface
      */
-    public function getConfig(): array;
+    public function getConfiguration(): ConfigurationInterface;
 
     /**
      * Example: /var/www/php-censor.localhost/

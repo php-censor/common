@@ -54,11 +54,11 @@ class VariableInterpolator implements VariableInterpolatorInterface
      */
     private function realtimeInterpolate(string $string): string
     {
-        $string = \str_replace('%CURRENT_DATE%', \date('Y-m-d'), $string);
-        $string = \str_replace('%CURRENT_TIME%', \date('H-i-s'), $string);
-        $string = \str_replace('%CURRENT_DATETIME%', \date('Y-m-d_H-i-s'), $string);
-
-        return $string;
+        return \str_replace(
+            ['%CURRENT_DATE%', '%CURRENT_TIME%', '%CURRENT_DATETIME%'],
+            [\date('Y-m-d'), \date('H-i-s'), \date('Y-m-d_H-i-s')],
+            $string
+        );
     }
 
     /**
