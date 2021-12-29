@@ -15,6 +15,9 @@ use PHPCensor\Common\Project\ProjectInterface;
  */
 class VariableInterpolator implements VariableInterpolatorInterface
 {
+    /**
+     * @var array<string, string>
+     */
     private array $variables = [];
 
     public function __construct(
@@ -59,10 +62,10 @@ class VariableInterpolator implements VariableInterpolatorInterface
             '%COMMITTER_EMAIL%' => $build->getCommitterEmail(),
             '%COMMIT_MESSAGE%'  => $build->getCommitMessage(),
             '%COMMIT_LINK%'     => $build->getCommitLink(),
-            '%PROJECT_ID%'      => $project->getId(),
+            '%PROJECT_ID%'      => (string)$project->getId(),
             '%PROJECT_TITLE%'   => $project->getTitle(),
             '%PROJECT_LINK%'    => $project->getLink(),
-            '%BUILD_ID%'        => $build->getId(),
+            '%BUILD_ID%'        => (string)$build->getId(),
             '%BUILD_PATH%'      => $build->getBuildPath(),
             '%BUILD_LINK%'      => $build->getLink(),
             '%BRANCH%'          => $build->getBranch(),
