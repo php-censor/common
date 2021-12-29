@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Tests\PHPCensor\Common\Plugin;
 
@@ -22,7 +22,7 @@ use Psr\Container\ContainerInterface;
 class SimplePlugin extends Plugin
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public static function getName(): string
     {
@@ -44,16 +44,13 @@ class SimplePlugin extends Plugin
         return $this->options;
     }
 
-    /**
-     * @return array
-     */
     public function getBinaryNames(): array
     {
         return $this->binaryNames;
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function execute(): bool
     {
@@ -61,7 +58,7 @@ class SimplePlugin extends Plugin
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getArtifactPath(string $file = ''): string
     {
@@ -69,7 +66,7 @@ class SimplePlugin extends Plugin
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getArtifactPathForBranch(string $file = ''): string
     {
@@ -77,7 +74,7 @@ class SimplePlugin extends Plugin
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getArtifactLink(string $file = ''): string
     {
@@ -85,7 +82,7 @@ class SimplePlugin extends Plugin
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getArtifactLinkForBranch(string $file = ''): string
     {
@@ -104,58 +101,55 @@ class SimplePluginWithBinaryNames extends SimplePlugin
 class PluginTest extends TestCase
 {
     /**
-     * @var MockObject | BuildInterface
+     * @var BuildInterface|MockObject
      */
     private $build;
 
     /**
-     * @var MockObject | ProjectInterface
+     * @var MockObject|ProjectInterface
      */
     private $project;
 
     /**
-     * @var MockObject | ApplicationInterface
+     * @var ApplicationInterface|MockObject
      */
     private $application;
 
     /**
-     * @var MockObject | BuildLoggerInterface
+     * @var BuildLoggerInterface|MockObject
      */
     private $buildLogger;
 
     /**
-     * @var MockObject | BuildErrorWriterInterface
+     * @var BuildErrorWriterInterface|MockObject
      */
     private $buildErrorWriter;
 
     /**
-     * @var MockObject | BuildMetaWriterInterface
+     * @var BuildMetaWriterInterface|MockObject
      */
     private $buildMetaWriter;
 
     /**
-     * @var MockObject | CommandExecutorInterface
+     * @var CommandExecutorInterface|MockObject
      */
     private $commandExecutor;
 
     /**
-     * @var MockObject | VariableInterpolatorInterface
+     * @var MockObject|VariableInterpolatorInterface
      */
     private $variableInterpolator;
 
     /**
-     * @var MockObject | PathResolverInterface
+     * @var MockObject|PathResolverInterface
      */
     private $pathResolver;
 
     /**
-     * @var MockObject | ContainerInterface
+     * @var ContainerInterface|MockObject
      */
     private $container;
 
-    /**
-     * @var string
-     */
     private string $buildPath;
 
     public function setUp(): void

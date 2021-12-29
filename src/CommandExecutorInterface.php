@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace PHPCensor\Common;
 
@@ -16,8 +16,6 @@ interface CommandExecutorInterface
 {
     /**
      * @param mixed ...$params
-     *
-     * @return bool
      */
     public function executeCommand(...$params): bool;
 
@@ -27,17 +25,9 @@ interface CommandExecutorInterface
 
     public function isEnabledCommandOutput(): bool;
 
-    /**
-     * @return string
-     */
     public function getLastCommandOutput(): string;
 
     /**
-     * @param array  $binaryNames
-     * @param string $binaryPath
-     *
-     * @return string
-     *
      * @throws Exception
      */
     public function findBinary(

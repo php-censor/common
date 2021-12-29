@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace PHPCensor\Common\Build;
 
@@ -13,10 +13,7 @@ namespace PHPCensor\Common\Build;
 interface BuildMetaWriterInterface
 {
     /**
-     * @param int         $buildId
-     * @param string|null $plugin
-     * @param string      $key
-     * @param mixed       $value
+     * @param mixed $value
      */
     public function write(
         int $buildId,

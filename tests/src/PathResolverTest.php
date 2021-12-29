@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Tests\PHPCensor\Common;
 
@@ -15,33 +15,24 @@ use PHPUnit\Framework\TestCase;
 class PathResolverTest extends TestCase
 {
     /**
-     * @var MockObject | BuildInterface
+     * @var BuildInterface|MockObject
      */
     private $build;
 
     /**
-     * @var MockObject | BuildLoggerInterface
+     * @var BuildLoggerInterface|MockObject
      */
     private $buildLogger;
 
     /**
-     * @var MockObject | VariableInterpolatorInterface
+     * @var MockObject|VariableInterpolatorInterface
      */
     private $variableInterpolator;
 
-    /**
-     * @var string
-     */
     private string $buildPath;
 
-    /**
-     * @var string
-     */
     private string $alternativeBuildPath;
 
-    /**
-     * @var string
-     */
     private string $rootDirectory;
 
     public function setUp(): void

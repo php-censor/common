@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace PHPCensor\Common;
 
@@ -12,21 +12,15 @@ namespace PHPCensor\Common;
  */
 class ParameterBag implements ParameterBagInterface, \IteratorAggregate, \Countable
 {
-    /**
-     * @var array
-     */
     protected array $parameters;
 
-    /**
-     * @param array $parameters
-     */
     public function __construct(array $parameters = [])
     {
         $this->parameters = $parameters;
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function get(string $key, $default = null)
     {
@@ -47,7 +41,7 @@ class ParameterBag implements ParameterBagInterface, \IteratorAggregate, \Counta
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function has(string $key): bool
     {
@@ -68,7 +62,7 @@ class ParameterBag implements ParameterBagInterface, \IteratorAggregate, \Counta
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function all(): array
     {
@@ -76,7 +70,7 @@ class ParameterBag implements ParameterBagInterface, \IteratorAggregate, \Counta
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getIterator(): \ArrayIterator
     {
@@ -84,7 +78,7 @@ class ParameterBag implements ParameterBagInterface, \IteratorAggregate, \Counta
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function count(): int
     {

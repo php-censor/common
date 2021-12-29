@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace PHPCensor\Common\Repository;
 
@@ -12,10 +12,5 @@ namespace PHPCensor\Common\Repository;
  */
 interface BuildErrorRepositoryInterface
 {
-    /**
-     * @param int $buildId
-     *
-     * @return array
-     */
     public function getErrorsCountPerPluginByBuildId(int $buildId): array;
 }

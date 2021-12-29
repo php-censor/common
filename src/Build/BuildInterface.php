@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace PHPCensor\Common\Build;
 
@@ -36,129 +36,60 @@ interface BuildInterface
     public const SOURCE_WEBHOOK_PULL_REQUEST_APPROVED = 7;
     public const SOURCE_WEBHOOK_PULL_REQUEST_MERGED   = 8;
 
-    /**
-     * @return int
-     */
     public function getId(): int;
 
-    /**
-     * @return int
-     */
     public function getProjectId(): int;
 
-    /**
-     * @return string
-     */
     public function getCommitId(): string;
 
-    /**
-     * @return string
-     */
     public function getCommitterEmail(): string;
 
-    /**
-     * @return string
-     */
     public function getCommitMessage(): string;
 
-    /**
-     * @return string
-     */
     public function getCommitLink(): string;
 
-    /**
-     * @return string
-     */
     public function getBranch(): string;
 
-    /**
-     * @return string
-     */
     public function getBranchLink(): string;
 
-    /**
-     * @return string
-     */
     public function getTag(): string;
 
-    /**
-     * @return string
-     */
     public function getEnvironment(): string;
 
-    /**
-     * @return int
-     */
     public function getSource(): int;
 
-    /**
-     * @return int
-     */
     public function getUserId(): int;
 
     /**
-     * @param string|null $key
-     *
      * @return mixed
      */
     public function getExtra(?string $key = null);
 
-    /**
-     * @return int
-     */
     public function getStatus(): int;
 
-    /**
-     * @return string
-     */
     public function getLog(): string;
 
-    /**
-     * @return \DateTime|null
-     */
     public function getCreateDate(): ?\DateTime;
 
-    /**
-     * @return \DateTime|null
-     */
     public function getStartDate(): ?\DateTime;
 
-    /**
-     * @return \DateTime|null
-     */
     public function getFinishDate(): ?\DateTime;
 
     /**
      * Returns absolute build path
-     *
-     * @return string
      */
     public function getBuildPath(): string;
 
-    /**
-     * @return bool
-     */
     public function isSuccessful(): bool;
 
-    /**
-     * @return string
-     */
     public function getBuildDirectory(): string;
 
-    /**
-     * @return string
-     */
     public function getBuildBranchDirectory(): string;
 
-    /**
-     * @return bool
-     */
     public function isDebug(): bool;
 
     /**
      * Example: http://php-censor.localhost/build/view/1
-     *
-     * @return string
      */
     public function getLink(): string;
 }

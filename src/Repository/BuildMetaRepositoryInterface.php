@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace PHPCensor\Common\Repository;
 
@@ -14,13 +14,6 @@ use PHPCensor\Common\Build\BuildMetaInterface;
  */
 interface BuildMetaRepositoryInterface
 {
-    /**
-     * @param int    $buildId
-     * @param string $plugin
-     * @param string $key
-     *
-     * @return BuildMetaInterface|null
-     */
     public function getOneByBuildIdAndPluginAndKey(
         int $buildId,
         string $plugin,

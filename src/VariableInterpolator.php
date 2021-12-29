@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace PHPCensor\Common;
 
@@ -15,16 +15,8 @@ use PHPCensor\Common\Project\ProjectInterface;
  */
 class VariableInterpolator implements VariableInterpolatorInterface
 {
-    /**
-     * @var array
-     */
     private array $variables = [];
 
-    /**
-     * @param BuildInterface   $build
-     * @param ProjectInterface $project
-     * @param string           $applicationVersion
-     */
     public function __construct(
         BuildInterface $build,
         ProjectInterface $project,
@@ -35,7 +27,7 @@ class VariableInterpolator implements VariableInterpolatorInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function interpolate(string $string): string
     {
@@ -47,11 +39,6 @@ class VariableInterpolator implements VariableInterpolatorInterface
         return \str_replace($keys, $values, $string);
     }
 
-    /**
-     * @param string $string
-     *
-     * @return string
-     */
     private function realtimeInterpolate(string $string): string
     {
         return \str_replace(
@@ -61,11 +48,6 @@ class VariableInterpolator implements VariableInterpolatorInterface
         );
     }
 
-    /**
-     * @param BuildInterface   $build
-     * @param ProjectInterface $project
-     * @param string           $applicationVersion
-     */
     private function initVariables(
         BuildInterface $build,
         ProjectInterface $project,

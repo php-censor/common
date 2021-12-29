@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace PHPCensor\Common\Build;
 
@@ -19,9 +19,6 @@ interface BuildMetaInterface
     public const KEY_COVERAGE = 'coverage';
     public const KEY_SUMMARY  = 'summary';
 
-    /**
-     * @return string
-     */
     public function getKey(): string;
 
     /**
@@ -29,8 +26,5 @@ interface BuildMetaInterface
      */
     public function getValue();
 
-    /**
-     * @return string|null
-     */
     public function getPlugin(): ?string;
 }
