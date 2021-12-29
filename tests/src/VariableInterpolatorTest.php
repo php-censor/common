@@ -158,7 +158,7 @@ class VariableInterpolatorProject implements ProjectInterface
 
 class VariableInterpolatorTest extends TestCase
 {
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $interpolator = new VariableInterpolator(
             new VariableInterpolatorBuild(),
@@ -170,7 +170,7 @@ class VariableInterpolatorTest extends TestCase
         self::assertInstanceOf(VariableInterpolator::class, $interpolator);
     }
 
-    public function testInterpolate()
+    public function testInterpolate(): void
     {
         $interpolator = new VariableInterpolator(
             new VariableInterpolatorBuild(),
@@ -235,7 +235,7 @@ for testing.')
         self::assertEquals('1.0.0', \getenv('PHP_CENSOR_SYSTEM_VERSION'));
     }
 
-    public function testRealtimeInterpolate()
+    public function testRealtimeInterpolate(): void
     {
         $interpolator = new VariableInterpolator(
             new VariableInterpolatorBuild(),
@@ -243,23 +243,23 @@ for testing.')
             '1.0.0'
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '#CURRENT_DATE\: (\d{4}\-\d{2}\-\d{2})#',
             $interpolator->interpolate('Text with CURRENT_DATE: %CURRENT_DATE% for testing')
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '#CURRENT_DATETIME\: (\d{4}\-\d{2}\-\d{2}_\d{2}\-\d{2}\-\d{2})#',
             $interpolator->interpolate('Text with CURRENT_DATETIME: %CURRENT_DATETIME% for testing')
         );
 
-        self::assertRegExp(
+        self::assertMatchesRegularExpression(
             '#CURRENT_TIME\: (\d{2}\-\d{2}\-\d{2})#',
             $interpolator->interpolate('Text with CURRENT_TIME: %CURRENT_TIME% for testing')
         );
     }
 
-    public function testInterpolateWithEndingSlashInUrl()
+    public function testInterpolateWithEndingSlashInUrl(): void
     {
         $interpolator = new VariableInterpolator(
             new VariableInterpolatorBuild(),

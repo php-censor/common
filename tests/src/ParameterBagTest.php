@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 class ParameterBagTest extends TestCase
 {
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $parameterBag = new ParameterBag([]);
 
@@ -18,7 +18,7 @@ class ParameterBagTest extends TestCase
         $this->assertInstanceOf(ParameterBag::class, $parameterBag);
     }
 
-    public function testAll()
+    public function testAll(): void
     {
         $parameters = [
             'foo'   => 'bar',
@@ -40,7 +40,7 @@ class ParameterBagTest extends TestCase
         $this->assertEquals($parameters, $parameterBag->all());
     }
 
-    public function testGet()
+    public function testGet(): void
     {
         $parameterBag = new ParameterBag([
             'foo'   => 'bar',
@@ -78,7 +78,7 @@ class ParameterBagTest extends TestCase
         $this->assertNull($parameterBag->get('foo_3.foo_4.null_5', 'default_5'));
     }
 
-    public function testHas()
+    public function testHas(): void
     {
         $parameterBag = new ParameterBag([
             'foo'   => 'bar',
@@ -108,7 +108,7 @@ class ParameterBagTest extends TestCase
         $this->assertFalse($parameterBag->has('foo_3.foo_4.unknown_5'));
     }
 
-    public function testGetIterator()
+    public function testGetIterator(): void
     {
         $parameters = [
             'foo'   => 'bar',
@@ -135,7 +135,7 @@ class ParameterBagTest extends TestCase
         $this->assertEquals(\count($parameters), $i);
     }
 
-    public function testCount()
+    public function testCount(): void
     {
         $parameters = [
             'foo'   => 'bar',

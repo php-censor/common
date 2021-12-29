@@ -158,7 +158,7 @@ class PluginTest extends TestCase
      */
     private string $buildPath;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -193,7 +193,7 @@ class PluginTest extends TestCase
         $this->container        = $this->createMock(ContainerInterface::class);
     }
 
-    public function testConstructSuccess()
+    public function testConstructSuccess(): void
     {
         $plugin = new SimplePlugin(
             $this->build,
@@ -214,7 +214,7 @@ class PluginTest extends TestCase
         $this->assertInstanceOf(ParameterBag::class, $plugin->getOptions());
     }
 
-    public function testConstructSuccessWithDefaultBuildSettings()
+    public function testConstructSuccessWithDefaultBuildSettings(): void
     {
         $plugin = new SimplePlugin(
             $this->build,
@@ -254,7 +254,7 @@ class PluginTest extends TestCase
         $this->assertEquals([], $plugin->getBuildSettings()->all());
     }
 
-    public function testConstructSuccessWithAlternativeBuildSettings()
+    public function testConstructSuccessWithAlternativeBuildSettings(): void
     {
         $this->project = $this->createMock(ProjectInterface::class);
         $this->project
@@ -291,7 +291,7 @@ class PluginTest extends TestCase
         ], $plugin->getBuildSettings()->all());
     }
 
-    public function testConstructSuccessWithDefaultPluginOptions()
+    public function testConstructSuccessWithDefaultPluginOptions(): void
     {
         $plugin = new SimplePlugin(
             $this->build,
@@ -331,7 +331,7 @@ class PluginTest extends TestCase
         $this->assertEquals([], $plugin->getOptions()->all());
     }
 
-    public function testConstructSuccessWithAlternativePluginOptions()
+    public function testConstructSuccessWithAlternativePluginOptions(): void
     {
         $this->project = $this->createMock(ProjectInterface::class);
         $this->project
@@ -400,7 +400,7 @@ class PluginTest extends TestCase
         ], $plugin->getOptions()->all());
     }
 
-    public function testConstructSuccessWithEmptyBinaryNames()
+    public function testConstructSuccessWithEmptyBinaryNames(): void
     {
         $plugin = new SimplePlugin(
             $this->build,
@@ -418,7 +418,7 @@ class PluginTest extends TestCase
         $this->assertEquals([], $plugin->getBinaryNames());
     }
 
-    public function testConstructSuccessWithDefaultBinaryNames()
+    public function testConstructSuccessWithDefaultBinaryNames(): void
     {
         $plugin = new SimplePluginWithBinaryNames(
             $this->build,
@@ -436,7 +436,7 @@ class PluginTest extends TestCase
         $this->assertEquals(['executable', 'executable.phar'], $plugin->getBinaryNames());
     }
 
-    public function testConstructSuccessWithBinaryNamesString()
+    public function testConstructSuccessWithBinaryNamesString(): void
     {
         $this->project = $this->createMock(ProjectInterface::class);
         $this->project
@@ -494,7 +494,7 @@ class PluginTest extends TestCase
         ], $plugin->getBinaryNames());
     }
 
-    public function testConstructSuccessWithBinaryNamesArray()
+    public function testConstructSuccessWithBinaryNamesArray(): void
     {
         $this->project = $this->createMock(ProjectInterface::class);
         $this->project
@@ -532,12 +532,12 @@ class PluginTest extends TestCase
         ], $plugin->getBinaryNames());
     }
 
-    public function testGetNameSuccess()
+    public function testGetNameSuccess(): void
     {
         $this->assertEquals('simple_plugin', SimplePlugin::getName());
     }
 
-    public function testDefaultCanExecute()
+    public function testDefaultCanExecute(): void
     {
         $this->assertFalse(SimplePlugin::canExecute(BuildInterface::STAGE_SETUP, $this->build));
         $this->assertFalse(SimplePlugin::canExecute(BuildInterface::STAGE_DEPLOY, $this->build));
@@ -549,7 +549,7 @@ class PluginTest extends TestCase
         $this->assertFalse(SimplePlugin::canExecute(BuildInterface::STAGE_TEST, $this->build));
     }
 
-    public function testGetArtifactPath()
+    public function testGetArtifactPath(): void
     {
         $this->application = $this->createMock(ApplicationInterface::class);
         $this->application
@@ -584,7 +584,7 @@ class PluginTest extends TestCase
         );
     }
 
-    public function testGetArtifactPathForBranch()
+    public function testGetArtifactPathForBranch(): void
     {
         $this->application = $this->createMock(ApplicationInterface::class);
         $this->application
@@ -619,7 +619,7 @@ class PluginTest extends TestCase
         );
     }
 
-    public function testGetArtifactLink()
+    public function testGetArtifactLink(): void
     {
         $this->application = $this->createMock(ApplicationInterface::class);
         $this->application
@@ -654,7 +654,7 @@ class PluginTest extends TestCase
         );
     }
 
-    public function testGetArtifactLinkForBranch()
+    public function testGetArtifactLinkForBranch(): void
     {
         $this->application = $this->createMock(ApplicationInterface::class);
         $this->application

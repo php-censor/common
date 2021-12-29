@@ -44,7 +44,7 @@ class PathResolverTest extends TestCase
      */
     private string $rootDirectory;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -76,7 +76,7 @@ class PathResolverTest extends TestCase
             ->willReturnArgument(0);
     }
 
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $pathResolver = new PathResolver(
             $this->build,
@@ -93,7 +93,7 @@ class PathResolverTest extends TestCase
         self::assertInstanceOf(PathResolver::class, $pathResolver);
     }
 
-    public function testResolveDirectory_EmptyBuildDirectory_RelativePluginDirectory()
+    public function testResolveDirectory_EmptyBuildDirectory_RelativePluginDirectory(): void
     {
         $pathResolver = new PathResolver(
             $this->build,
@@ -168,7 +168,7 @@ class PathResolverTest extends TestCase
         );
     }
 
-    public function testResolveDirectory_RelativeBuildDirectory()
+    public function testResolveDirectory_RelativeBuildDirectory(): void
     {
         $pathResolver = new PathResolver(
             $this->build,
@@ -197,7 +197,7 @@ class PathResolverTest extends TestCase
         );
     }
 
-    public function testResolveDirectory_EmptyBuildDirectory_AbsolutePluginDirectory()
+    public function testResolveDirectory_EmptyBuildDirectory_AbsolutePluginDirectory(): void
     {
         $pathResolver = new PathResolver(
             $this->build,
@@ -227,7 +227,7 @@ class PathResolverTest extends TestCase
         );
     }
 
-    public function testResolveDirectory_AbsoluteBuildDirectory()
+    public function testResolveDirectory_AbsoluteBuildDirectory(): void
     {
         $pathResolver = new PathResolver(
             $this->build,
@@ -256,7 +256,7 @@ class PathResolverTest extends TestCase
         );
     }
 
-    public function testResolveBinaryPath_EmptyBuildBinaryPath_RelativePluginBinaryPath()
+    public function testResolveBinaryPath_EmptyBuildBinaryPath_RelativePluginBinaryPath(): void
     {
         $pathResolver = new PathResolver(
             $this->build,
@@ -331,7 +331,7 @@ class PathResolverTest extends TestCase
         );
     }
 
-    public function testResolveBinaryPath_RelativeBuildBinaryPath()
+    public function testResolveBinaryPath_RelativeBuildBinaryPath(): void
     {
         $pathResolver = new PathResolver(
             $this->build,
@@ -360,7 +360,7 @@ class PathResolverTest extends TestCase
         );
     }
 
-    public function testResolveBinaryPath_EmptyBuildBinaryPath_AbsolutePluginBinaryPath()
+    public function testResolveBinaryPath_EmptyBuildBinaryPath_AbsolutePluginBinaryPath(): void
     {
         $pathResolver = new PathResolver(
             $this->build,
@@ -390,7 +390,7 @@ class PathResolverTest extends TestCase
         );
     }
 
-    public function testResolveBinaryPath_AbsoluteBuildBinaryPath()
+    public function testResolveBinaryPath_AbsoluteBuildBinaryPath(): void
     {
         $pathResolver = new PathResolver(
             $this->build,
@@ -419,7 +419,7 @@ class PathResolverTest extends TestCase
         );
     }
 
-    public function testResolvePath_RelativePath()
+    public function testResolvePath_RelativePath(): void
     {
         $pathResolver = new PathResolver(
             $this->build,
@@ -499,7 +499,7 @@ class PathResolverTest extends TestCase
         );
     }
 
-    public function testResolvePath_AbsolutePath()
+    public function testResolvePath_AbsolutePath(): void
     {
         $pathResolver = new PathResolver(
             $this->build,
@@ -534,7 +534,7 @@ class PathResolverTest extends TestCase
         );
     }
 
-    public function testResolveIgnores_EmptyBuildIgnores_OnlyInBuildPath()
+    public function testResolveIgnores_EmptyBuildIgnores_OnlyInBuildPath(): void
     {
         $pathResolver = new PathResolver(
             $this->build,
@@ -578,7 +578,7 @@ class PathResolverTest extends TestCase
         );
     }
 
-    public function testResolveIgnores_EmptyBuildIgnores_NotOnlyInBuildPath()
+    public function testResolveIgnores_EmptyBuildIgnores_NotOnlyInBuildPath(): void
     {
         $pathResolver = new PathResolver(
             $this->build,
@@ -622,7 +622,7 @@ class PathResolverTest extends TestCase
         );
     }
 
-    public function testResolveIgnores_NotEmptyBuildIgnores_OnlyInBuildPath()
+    public function testResolveIgnores_NotEmptyBuildIgnores_OnlyInBuildPath(): void
     {
         $pathResolver = new PathResolver(
             $this->build,
@@ -656,7 +656,7 @@ class PathResolverTest extends TestCase
         );
     }
 
-    public function testResolveIgnores_NotEmptyBuildIgnores_NotOnlyInBuildPath()
+    public function testResolveIgnores_NotEmptyBuildIgnores_NotOnlyInBuildPath(): void
     {
         $pathResolver = new PathResolver(
             $this->build,
