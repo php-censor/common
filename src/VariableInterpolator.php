@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace PHPCensor\Common;
 
@@ -16,15 +16,10 @@ use PHPCensor\Common\Project\ProjectInterface;
 class VariableInterpolator implements VariableInterpolatorInterface
 {
     /**
-     * @var array
+     * @var array<string, string>
      */
     private array $variables = [];
 
-    /**
-     * @param BuildInterface   $build
-     * @param ProjectInterface $project
-     * @param string           $applicationVersion
-     */
     public function __construct(
         BuildInterface $build,
         ProjectInterface $project,
@@ -35,7 +30,7 @@ class VariableInterpolator implements VariableInterpolatorInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function interpolate(string $string): string
     {
@@ -47,11 +42,6 @@ class VariableInterpolator implements VariableInterpolatorInterface
         return \str_replace($keys, $values, $string);
     }
 
-    /**
-     * @param string $string
-     *
-     * @return string
-     */
     private function realtimeInterpolate(string $string): string
     {
         return \str_replace(
@@ -61,11 +51,6 @@ class VariableInterpolator implements VariableInterpolatorInterface
         );
     }
 
-    /**
-     * @param BuildInterface   $build
-     * @param ProjectInterface $project
-     * @param string           $applicationVersion
-     */
     private function initVariables(
         BuildInterface $build,
         ProjectInterface $project,
@@ -77,10 +62,10 @@ class VariableInterpolator implements VariableInterpolatorInterface
             '%COMMITTER_EMAIL%' => $build->getCommitterEmail(),
             '%COMMIT_MESSAGE%'  => $build->getCommitMessage(),
             '%COMMIT_LINK%'     => $build->getCommitLink(),
-            '%PROJECT_ID%'      => $project->getId(),
+            '%PROJECT_ID%'      => (string)$project->getId(),
             '%PROJECT_TITLE%'   => $project->getTitle(),
             '%PROJECT_LINK%'    => $project->getLink(),
-            '%BUILD_ID%'        => $build->getId(),
+            '%BUILD_ID%'        => (string)$build->getId(),
             '%BUILD_PATH%'      => $build->getBuildPath(),
             '%BUILD_LINK%'      => $build->getLink(),
             '%BRANCH%'          => $build->getBranch(),

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace PHPCensor\Common\Repository;
 
@@ -14,12 +14,6 @@ use PHPCensor\Common\Build\BuildInterface;
  */
 interface BuildRepositoryInterface
 {
-    /**
-     * @param int    $projectId
-     * @param string $branch
-     *
-     * @return BuildInterface|null
-     */
     public function getLatestByProjectAndBranch(
         int $projectId,
         string $branch

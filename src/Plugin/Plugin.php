@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace PHPCensor\Common\Plugin;
 
@@ -24,71 +24,33 @@ use Psr\Container\ContainerInterface;
  */
 abstract class Plugin implements PluginInterface
 {
-    /**
-     * @var BuildInterface
-     */
     protected BuildInterface $build;
 
-    /**
-     * @var ProjectInterface
-     */
     protected ProjectInterface $project;
 
-    /**
-     * @var ApplicationInterface
-     */
     protected ApplicationInterface $application;
 
-    /**
-     * @var BuildLoggerInterface
-     */
     protected BuildLoggerInterface $buildLogger;
 
-    /**
-     * @var BuildErrorWriterInterface
-     */
     protected BuildErrorWriterInterface $buildErrorWriter;
 
-    /**
-     * @var BuildMetaWriterInterface
-     */
     protected BuildMetaWriterInterface $buildMetaWriter;
 
-    /**
-     * @var CommandExecutorInterface
-     */
     protected CommandExecutorInterface $commandExecutor;
 
-    /**
-     * @var VariableInterpolatorInterface
-     */
     protected VariableInterpolatorInterface $variableInterpolator;
 
-    /**
-     * @var PathResolverInterface
-     */
     protected PathResolverInterface $pathResolver;
 
-    /**
-     * @var ContainerInterface
-     */
     protected ContainerInterface $container;
 
-    /**
-     * @var ParameterBag
-     */
     protected ParameterBag $options;
 
-    /**
-     * @var ParameterBag
-     */
     protected ParameterBag $buildSettings;
 
     /**
      * Working directory for plugin (Directory with files for inspecting or directory with tests).
      * For example: `composer.phar --working-dir="<directory>"` install
-     *
-     * @var string
      */
     protected string $directory;
 
@@ -101,50 +63,23 @@ abstract class Plugin implements PluginInterface
 
     /**
      * Path for searching plugin binary (executable). For example: '/home/user/bin/'.
-     *
-     * @var string
      */
     protected string $binaryPath;
 
     /**
      * Names of the binary (executable) for searching in the binary path or in the build directory.
-     *
-     * @var array
      */
     protected array $binaryNames = [];
 
-    /**
-     * @var string
-     */
     protected string $artifactsPluginPath;
 
-    /**
-     * @var string
-     */
     protected string $artifactsPluginBranchPath;
 
-    /**
-     * @var string
-     */
     protected string $artifactsPluginLink;
 
-    /**
-     * @var string
-     */
     protected string $artifactsPluginBranchLink;
 
     /**
-     * @param BuildInterface                $build
-     * @param ProjectInterface              $project
-     * @param BuildLoggerInterface          $buildLogger
-     * @param BuildErrorWriterInterface     $buildErrorWriter
-     * @param BuildMetaWriterInterface      $buildMetaWriter
-     * @param CommandExecutorInterface      $commandExecutor
-     * @param VariableInterpolatorInterface $variableInterpolator
-     * @param PathResolverInterface         $pathResolver
-     * @param ApplicationInterface          $application
-     * @param ContainerInterface            $container
-     *
      * @throws \Throwable
      */
     public function __construct(
@@ -234,17 +169,17 @@ abstract class Plugin implements PluginInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     abstract public static function getName(): string;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     abstract public function execute(): bool;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public static function canExecute(string $stage, BuildInterface $build): bool
     {
@@ -315,8 +250,6 @@ abstract class Plugin implements PluginInterface
     /**
      * If plugin has binary (executable) method should return array of default binary names.
      * For example: ['executable', 'executable.phar'].
-     *
-     * @return array
      */
     protected function getPluginDefaultBinaryNames(): array
     {
@@ -326,10 +259,6 @@ abstract class Plugin implements PluginInterface
     /**
      * Example: /var/www/php-censor.localhost/public/artifacts/phpunit/2/10_xxxxxxxx/report.xml
      * Where: Project Id: 2, Build Id: 10, File: report.xml
-     *
-     * @param string $file
-     *
-     * @return string
      */
     protected function getArtifactPath(string $file = ''): string
     {
@@ -339,10 +268,6 @@ abstract class Plugin implements PluginInterface
     /**
      * Example: /var/www/php-censor.localhost/public/artifacts/phpunit/2/master_xxxxxxxx/report.xml
      * Where: Project Id: 2, Branch: "master", File: report.xml
-     *
-     * @param string $file
-     *
-     * @return string
      */
     protected function getArtifactPathForBranch(string $file = ''): string
     {
@@ -352,10 +277,6 @@ abstract class Plugin implements PluginInterface
     /**
      * Example: https://php-censor.localhost/artifacts/phpunit/2/10_xxxxxxxx/report.xml
      * Where: Project Id: 2, Build Id: 10, File: report.xml
-     *
-     * @param string $file
-     *
-     * @return string
      */
     protected function getArtifactLink(string $file = ''): string
     {
@@ -369,10 +290,6 @@ abstract class Plugin implements PluginInterface
     /**
      * Example: https://php-censor.localhost/artifacts/phpunit/2/master_xxxxxxxx/report.xml
      * Where: Project Id: 2, Branch: "master", File: report.xml
-     *
-     * @param string $file
-     *
-     * @return string
      */
     protected function getArtifactLinkForBranch(string $file = ''): string
     {

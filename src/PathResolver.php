@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace PHPCensor\Common;
 
@@ -15,34 +15,16 @@ use PHPCensor\Common\Build\BuildLoggerInterface;
  */
 class PathResolver implements PathResolverInterface
 {
-    /**
-     * @var BuildInterface
-     */
     private BuildInterface $build;
 
-    /**
-     * @var BuildLoggerInterface
-     */
     private BuildLoggerInterface $buildLogger;
 
-    /**
-     * @var VariableInterpolatorInterface
-     */
     private VariableInterpolatorInterface $variableInterpolator;
 
-    /**
-     * @var ParameterBag
-     */
     protected ParameterBag $buildSettings;
 
-    /**
-     * @var string|null
-     */
     private ?string $buildDirectory = null;
 
-    /**
-     * @var string|null
-     */
     private ?string $buildBinaryPath = null;
 
     /**
@@ -50,12 +32,6 @@ class PathResolver implements PathResolverInterface
      */
     private ?array $buildIgnores = null;
 
-    /**
-     * @param BuildInterface                $build
-     * @param BuildLoggerInterface          $buildLogger
-     * @param VariableInterpolatorInterface $variableInterpolator
-     * @param array                         $projectConfig
-     */
     public function __construct(
         BuildInterface $build,
         BuildLoggerInterface $buildLogger,
@@ -70,7 +46,7 @@ class PathResolver implements PathResolverInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function resolveDirectory(string $pluginDirectory): string
     {
@@ -89,11 +65,6 @@ class PathResolver implements PathResolverInterface
         return $finalDirectory;
     }
 
-    /**
-     * @param string $pluginBinaryPath
-     *
-     * @return string
-     */
     public function resolveBinaryPath(string $pluginBinaryPath): string
     {
         if ($pluginBinaryPath) {
@@ -112,7 +83,7 @@ class PathResolver implements PathResolverInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function resolvePath(string $path, bool $isFile = false): string
     {
@@ -123,7 +94,7 @@ class PathResolver implements PathResolverInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function resolveIgnores(array $pluginIgnores, bool $onlyInBuildPath = true): array
     {
@@ -164,12 +135,6 @@ class PathResolver implements PathResolverInterface
         );
     }
 
-    /**
-     * @param string $path
-     * @param bool   $isFile
-     *
-     * @return string
-     */
     private function getRealPath(string $path, bool $isFile = false): string
     {
         $path = \rtrim(
@@ -202,12 +167,6 @@ class PathResolver implements PathResolverInterface
         return  $resolvedPath;
     }
 
-    /**
-     * @param string $path
-     * @param string $basePath
-     *
-     * @return string
-     */
     private function normalizePath(string $path, string $basePath): string
     {
         $path = $this->variableInterpolator->interpolate($path);
@@ -223,9 +182,6 @@ class PathResolver implements PathResolverInterface
         return $path;
     }
 
-    /**
-     * @param array $projectConfig
-     */
     private function initBuildSettings(array $projectConfig): void
     {
         $buildSettingArray = [];
@@ -236,9 +192,6 @@ class PathResolver implements PathResolverInterface
         $this->buildSettings = new ParameterBag($buildSettingArray);
     }
 
-    /**
-     * @return string
-     */
     private function getBuildDirectory(): string
     {
         if (null === $this->buildDirectory) {
@@ -256,9 +209,6 @@ class PathResolver implements PathResolverInterface
         return $this->buildDirectory;
     }
 
-    /**
-     * @return string
-     */
     private function getBuildBinaryPath(): string
     {
         if (null === $this->buildBinaryPath) {
@@ -276,9 +226,6 @@ class PathResolver implements PathResolverInterface
         return $this->buildBinaryPath;
     }
 
-    /**
-     * @return array
-     */
     private function getBuildIgnores(): array
     {
         if (null === $this->buildIgnores) {

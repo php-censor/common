@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace PHPCensor\Common;
 
@@ -84,7 +84,7 @@ class EmailSender implements EmailSenderInterface
         }
 
         $carbonCopyEmails = $email->getCarbonCopyEmails();
-        if (\is_array($carbonCopyEmails) && \count($carbonCopyEmails)) {
+        if (\count($carbonCopyEmails) > 0) {
             $message->setCc($carbonCopyEmails);
         }
 
