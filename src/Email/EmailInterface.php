@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PHPCensor\Common;
+namespace PHPCensor\Common\Email;
 
 /**
  * @package    PHP Censor
@@ -12,6 +12,8 @@ namespace PHPCensor\Common;
  */
 interface EmailInterface
 {
+    public const DEFAULT_FROM = 'PHP Censor <no-reply@php-censor.local>';
+
     public function setEmailTo(string $email, ?string $name = null): self;
 
     public function setSubject(string $subject): self;

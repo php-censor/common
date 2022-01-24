@@ -10,7 +10,6 @@ use PHPCensor\Common\Build\BuildInterface;
 use PHPCensor\Common\Build\BuildLoggerInterface;
 use PHPCensor\Common\Build\BuildMetaWriterInterface;
 use PHPCensor\Common\CommandExecutorInterface;
-use PHPCensor\Common\PathResolverInterface;
 use PHPCensor\Common\ParameterBag;
 use PHPCensor\Common\Project\ProjectInterface;
 use PHPCensor\Common\VariableInterpolatorInterface;

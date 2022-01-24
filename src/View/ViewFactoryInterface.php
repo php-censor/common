@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PHPCensor\Common;
+namespace PHPCensor\Common\View;
 
 use PHPCensor\Common\Exception\Exception;
 

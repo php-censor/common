@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PHPCensor\Common;
+namespace PHPCensor\Common\Email;
 
 /**
  * @package    PHP Censor
@@ -10,6 +10,7 @@ namespace PHPCensor\Common;
  *
  * @author Dmitry Khomutov <poisoncorpsee@gmail.com>
  */
-interface ConfigurationInterface extends ParameterBagInterface
+interface EmailSenderInterface
 {
+    public function send(EmailInterface $email): int;
 }

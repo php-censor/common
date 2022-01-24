@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\PHPCensor\Common;
+namespace Tests\PHPCensor\Common\External;
 
 use PHPCensor\Common\Build\BuildInterface;
 use PHPCensor\Common\Project\ProjectInterface;
-use PHPCensor\Common\VariableInterpolator;
+use PHPCensor\Common\External\VariableInterpolator;
 use PHPCensor\Common\VariableInterpolatorInterface;
 use PHPUnit\Framework\TestCase;
 
