@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Tests\PHPCensor\Common;
+namespace Tests\PHPCensor\Common\Plugin;
 
 use PHPCensor\Common\Build\BuildInterface;
 use PHPCensor\Common\Build\BuildLoggerInterface;
-use PHPCensor\Common\PathResolver;
-use PHPCensor\Common\PathResolverInterface;
+use PHPCensor\Common\Plugin\PathResolver;
+use PHPCensor\Common\Plugin\PathResolverInterface;
 use PHPCensor\Common\VariableInterpolatorInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -40,17 +40,17 @@ class PathResolverTest extends TestCase
         parent::setUp();
 
         $this->rootDirectory = \rtrim(
-            \realpath(__DIR__ . '/../../'),
+            \realpath(__DIR__ . '/../../../'),
             '/\\'
         ) . '/';
 
         $this->buildPath = \rtrim(
-            \realpath(__DIR__ . '/../data/build1'),
+            \realpath(__DIR__ . '/../../data/build1'),
             '/\\'
         ) . '/';
 
         $this->alternativeBuildPath = \rtrim(
-            \realpath(__DIR__ . '/../data/build2'),
+            \realpath(__DIR__ . '/../../data/build2'),
             '/\\'
         ) . '/';
 
@@ -199,7 +199,7 @@ class PathResolverTest extends TestCase
 
         self::assertEquals(
             $this->rootDirectory . 'tests/data/build2/',
-            $pathResolver->resolveDirectory(__DIR__ . '/../data/build2')
+            $pathResolver->resolveDirectory(__DIR__ . '/../../data/build2')
         );
 
         self::assertEquals(
@@ -362,7 +362,7 @@ class PathResolverTest extends TestCase
 
         self::assertEquals(
             $this->rootDirectory . 'tests/data/build2/',
-            $pathResolver->resolveBinaryPath(__DIR__ . '/../data/build2')
+            $pathResolver->resolveBinaryPath(__DIR__ . '/../../data/build2')
         );
 
         self::assertEquals(
@@ -501,12 +501,12 @@ class PathResolverTest extends TestCase
 
         self::assertEquals(
             $this->rootDirectory . 'tests/data/build2/',
-            $pathResolver->resolveDirectory(__DIR__ . '/../data/build2')
+            $pathResolver->resolveDirectory(__DIR__ . '/../../data/build2')
         );
 
         self::assertEquals(
             $this->rootDirectory . 'tests/data/build2/.gitkeep',
-            $pathResolver->resolvePath(__DIR__ . '/../data/build2/.gitkeep', true)
+            $pathResolver->resolvePath(__DIR__ . '/../../data/build2/.gitkeep', true)
         );
 
         self::assertEquals(
@@ -604,7 +604,7 @@ class PathResolverTest extends TestCase
                 './directory1/././subdirectory1',
                 'directory1',
                 'directory1/',
-                __DIR__ . '/../data/build2',
+                __DIR__ . '/../../data/build2',
                 '/directory1/directory2/../directory3',
                 '\directory1\directory2\..\directory3',
                 '///directory1',

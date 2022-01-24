@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace PHPCensor\Common\Application;
 
-use PHPCensor\Common\ConfigurationInterface;
-
 /**
  * @package    PHP Censor
  * @subpackage Common Library

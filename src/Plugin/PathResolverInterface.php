@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PHPCensor\Common;
+namespace PHPCensor\Common\Plugin;
 
 /**
  * @package    PHP Censor

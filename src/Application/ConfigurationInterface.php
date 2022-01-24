@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PHPCensor\Common;
+namespace PHPCensor\Common\Application;
+
+use PHPCensor\Common\ParameterBagInterface;
 
 /**
  * @package    PHP Censor
@@ -10,7 +12,6 @@ namespace PHPCensor\Common;
  *
  * @author Dmitry Khomutov <poisoncorpsee@gmail.com>
  */
-interface EmailSenderInterface
+interface ConfigurationInterface extends ParameterBagInterface
 {
-    public function send(EmailInterface $email): int;
 }

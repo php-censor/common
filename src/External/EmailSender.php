@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace PHPCensor\Common\External;
 
+use PHPCensor\Common\Application\ConfigurationInterface;
 use PHPCensor\Common\Build\BuildLoggerInterface;
-use PHPCensor\Common\ConfigurationInterface;
-use PHPCensor\Common\EmailInterface;
-use PHPCensor\Common\EmailSenderInterface;
+use PHPCensor\Common\Email\EmailInterface;
+use PHPCensor\Common\Email\EmailSenderInterface;
 
 /**
  * @package    PHP Censor

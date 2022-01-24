@@ -2,10 +2,12 @@
 
 declare(strict_types=1);
 
-namespace PHPCensor\Common;
+namespace PHPCensor\Common\Plugin;
 
 use PHPCensor\Common\Build\BuildInterface;
 use PHPCensor\Common\Build\BuildLoggerInterface;
+use PHPCensor\Common\ParameterBag;
+use PHPCensor\Common\VariableInterpolatorInterface;
 
 /**
  * @package    PHP Censor

@@ -12,8 +12,8 @@
         "@default": true,
         "MethodCallRemoval": {
             "ignore": [
-                "PHPCensor\\Common\\PathResolver::resolveDirectory",
-                "PHPCensor\\Common\\PathResolver::resolveBinaryPath",
+                "PHPCensor\\Common\\Plugin\\PathResolver::resolveDirectory",
+                "PHPCensor\\Common\\Plugin\\PathResolver::resolveBinaryPath",
                 "PHPCensor\\Common\\Plugin\\Plugin::initOptions"
             ]
         },
