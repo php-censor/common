@@ -2,9 +2,12 @@
 
 declare(strict_types=1);
 
-namespace PHPCensor\Common;
+namespace PHPCensor\Common\External;
 
 use PHPCensor\Common\Build\BuildLoggerInterface;
+use PHPCensor\Common\ConfigurationInterface;
+use PHPCensor\Common\EmailInterface;
+use PHPCensor\Common\EmailSenderInterface;
 
 /**
  * @package    PHP Censor
@@ -51,7 +54,11 @@ class EmailSender implements EmailSenderInterface
 
     public function getFrom(): array
     {
-        $from = (string)$this->configuration->get('php-censor.email_settings.from_address', Email::DEFAULT_FROM);
+        $from = (string)$this->configuration->get(
+            'php-censor.email_settings.from_address',
+            EmailInterface::DEFAULT_FROM
+        );
+
         if (false === \strpos($from, '<')) {
             return [\trim($from) => 'PHP Censor'];
         }

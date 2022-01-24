@@ -12,8 +12,6 @@ namespace PHPCensor\Common;
  */
 class Email implements EmailInterface
 {
-    public const DEFAULT_FROM = 'PHP Censor <no-reply@php-censor.local>';
-
     private array $emailTo = [];
     private array $carbonCopyEmails = [];
     private string $subject = 'Email from PHP Censor';

@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace PHPCensor\Common;
+namespace PHPCensor\Common\External;
 
 use PHPCensor\Common\Build\BuildInterface;
 use PHPCensor\Common\Project\ProjectInterface;
+use PHPCensor\Common\VariableInterpolatorInterface;
 
 /**
  * @package    PHP Censor
@@ -29,9 +30,6 @@ class VariableInterpolator implements VariableInterpolatorInterface
         $this->initEnvironmentVariables();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function interpolate(string $string): string
     {
         $string = $this->realtimeInterpolate($string);
