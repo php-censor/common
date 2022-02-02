@@ -48,7 +48,7 @@ class EmailSender implements EmailSenderInterface
         return Address::create($from);
     }
 
-    public function send(EmailInterface $email): void
+    public function send(EmailInterface $email): bool
     {
         $smtpAddress = $this->configuration->get('php-censor.email_settings.smtp_address');
 
@@ -76,6 +76,10 @@ class EmailSender implements EmailSenderInterface
             $this->mailer->send($message);
         } catch (\Throwable $e) {
             $this->logger->logWarning($e->getMessage());
+
+            return false;
         }
+
+        return true;
     }
 }
