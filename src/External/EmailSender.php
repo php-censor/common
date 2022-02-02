@@ -59,7 +59,7 @@ class EmailSender implements EmailSenderInterface
         $message = (new Email())
             ->subject($email->getSubject())
             ->from($this->getFrom())
-            ->to(...$email->getEmailTo());
+            ->to(...$email->getEmailsTo());
 
         if ($email->isHtml()) {
             $message->html($email->getBody());
