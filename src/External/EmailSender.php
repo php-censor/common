@@ -8,10 +8,7 @@ use PHPCensor\Common\Application\ConfigurationInterface;
 use PHPCensor\Common\Build\BuildLoggerInterface;
 use PHPCensor\Common\Email\EmailInterface;
 use PHPCensor\Common\Email\EmailSenderInterface;
-use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mailer\Transport\SendmailTransport;
-use Symfony\Component\Mailer\Transport\Smtp\EsmtpTransport;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
 
@@ -23,38 +20,18 @@ use Symfony\Component\Mime\Email;
  */
 class EmailSender implements EmailSenderInterface
 {
-    private BuildLoggerInterface $logger;
-
     private ConfigurationInterface $configuration;
+    private BuildLoggerInterface $logger;
+    private MailerInterface $mailer;
 
     public function __construct(
         ConfigurationInterface $configuration,
-        BuildLoggerInterface $logger
+        BuildLoggerInterface $logger,
+        MailerInterface $mailer
     ) {
         $this->configuration = $configuration;
         $this->logger        = $logger;
-    }
-
-    private function getSwiftMailerFromConfig(): MailerInterface
-    {
-        $smtpAddress = (string)$this->configuration->get('php-censor.email_settings.smtp_address', '');
-        if ($smtpAddress) {
-            $transport = new EsmtpTransport(
-                $smtpAddress,
-                (int)$this->configuration->get('php-censor.email_settings.smtp_port', 25),
-                (bool)$this->configuration->get('php-censor.email_settings.smtp_encryption')
-            );
-            $transport->setUsername(
-                (string)$this->configuration->get('php-censor.email_settings.smtp_username', '')
-            );
-            $transport->setPassword(
-                (string)$this->configuration->get('php-censor.email_settings.smtp_password', '')
-            );
-        } else {
-            $transport = new SendmailTransport();
-        }
-
-        return new Mailer($transport);
+        $this->mailer        = $mailer;
     }
 
     public function getFrom(): Address
@@ -79,8 +56,6 @@ class EmailSender implements EmailSenderInterface
             \sprintf("SMTP: '%s'", !empty($smtpAddress) ? 'true' : 'false')
         );
 
-        $mailer = $this->getSwiftMailerFromConfig();
-
         $message = (new Email())
             ->subject($email->getSubject())
             ->from($this->getFrom())
@@ -98,7 +73,7 @@ class EmailSender implements EmailSenderInterface
         }
 
         try {
-            $mailer->send($message);
+            $this->mailer->send($message);
         } catch (\Throwable $e) {
             $this->logger->logWarning($e->getMessage());
         }
