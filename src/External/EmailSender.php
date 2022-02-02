@@ -8,6 +8,12 @@ use PHPCensor\Common\Application\ConfigurationInterface;
 use PHPCensor\Common\Build\BuildLoggerInterface;
 use PHPCensor\Common\Email\EmailInterface;
 use PHPCensor\Common\Email\EmailSenderInterface;
+use Symfony\Component\Mailer\Mailer;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mailer\Transport\SendmailTransport;
+use Symfony\Component\Mailer\Transport\Smtp\EsmtpTransport;
+use Symfony\Component\Mime\Address;
+use Symfony\Component\Mime\Email;
 
 /**
  * @package    PHP Censor
@@ -29,16 +35,15 @@ class EmailSender implements EmailSenderInterface
         $this->logger        = $logger;
     }
 
-    private function getSwiftMailerFromConfig(): \Swift_Mailer
+    private function getSwiftMailerFromConfig(): MailerInterface
     {
         $smtpAddress = (string)$this->configuration->get('php-censor.email_settings.smtp_address', '');
         if ($smtpAddress) {
-            $transport = new \Swift_SmtpTransport(
+            $transport = new EsmtpTransport(
                 $smtpAddress,
                 (int)$this->configuration->get('php-censor.email_settings.smtp_port', 25),
-                $this->configuration->get('php-censor.email_settings.smtp_encryption')
+                (bool)$this->configuration->get('php-censor.email_settings.smtp_encryption')
             );
-
             $transport->setUsername(
                 (string)$this->configuration->get('php-censor.email_settings.smtp_username', '')
             );
@@ -46,13 +51,13 @@ class EmailSender implements EmailSenderInterface
                 (string)$this->configuration->get('php-censor.email_settings.smtp_password', '')
             );
         } else {
-            $transport = new \Swift_SendmailTransport();
+            $transport = new SendmailTransport();
         }
 
-        return new \Swift_Mailer($transport);
+        return new Mailer($transport);
     }
 
-    public function getFrom(): array
+    public function getFrom(): Address
     {
         $from = (string)$this->configuration->get(
             'php-censor.email_settings.from_address',
@@ -60,17 +65,13 @@ class EmailSender implements EmailSenderInterface
         );
 
         if (false === \strpos($from, '<')) {
-            return [\trim($from) => 'PHP Censor'];
+            $from = \sprintf('PHP Censor <%s>', $from);
         }
 
-        \preg_match('#^(.*?)<(.*?)>$#ui', $from, $fromParts);
-
-        return [
-            \trim($fromParts[2]) => \trim($fromParts[1])
-        ];
+        return Address::create($from);
     }
 
-    public function send(EmailInterface $email): int
+    public function send(EmailInterface $email): void
     {
         $smtpAddress = $this->configuration->get('php-censor.email_settings.smtp_address');
 
@@ -80,31 +81,26 @@ class EmailSender implements EmailSenderInterface
 
         $mailer = $this->getSwiftMailerFromConfig();
 
-        $message = new \Swift_Message($email->getSubject());
-        $message
-            ->setFrom($this->getFrom())
-            ->setTo($email->getEmailTo())
-            ->setBody($email->getBody());
+        $message = (new Email())
+            ->subject($email->getSubject())
+            ->from($this->getFrom())
+            ->to(...$email->getEmailTo());
 
         if ($email->isHtml()) {
-            $message->setContentType('text/html');
+            $message->html($email->getBody());
+        } else {
+            $message->text($email->getBody());
         }
 
         $carbonCopyEmails = $email->getCarbonCopyEmails();
         if (\count($carbonCopyEmails) > 0) {
-            $message->setCc($carbonCopyEmails);
+            $message->cc(...$carbonCopyEmails);
         }
 
-        \ob_start();
-
-        $result = $mailer->send($message);
-
-        $rawOutput = \ob_get_clean();
-
-        if ($rawOutput) {
-            $this->logger->logWarning($rawOutput);
+        try {
+            $mailer->send($message);
+        } catch (\Throwable $e) {
+            $this->logger->logWarning($e->getMessage());
         }
-
-        return $result;
     }
 }

@@ -12,5 +12,5 @@ namespace PHPCensor\Common\Email;
  */
 interface EmailSenderInterface
 {
-    public function send(EmailInterface $email): int;
+    public function send(EmailInterface $email): void;
 }
