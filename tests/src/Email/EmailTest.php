@@ -24,12 +24,12 @@ class EmailTest extends TestCase
         self::assertEquals('Subject', $email->getSubject());
         self::assertEquals(true, $email->isHtml());
         self::assertEquals([
-            'test-1@test.test' => 'Test 1',
-            'test-2@test.test' => null,
+            'Test 1 <test-1@test.test>',
+            'test-2@test.test',
         ], $email->getEmailsTo());
         self::assertEquals([
-            'test-cc-1@test.test' => 'Test CC 1',
-            'test-cc-2@test.test' => null,
+            'Test CC 1 <test-cc-1@test.test>',
+            'test-cc-2@test.test',
         ], $email->getCarbonCopyEmails());
     }
 }

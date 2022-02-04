@@ -23,6 +23,7 @@ class EmailSender implements EmailSenderInterface
     private ConfigurationInterface $configuration;
     private BuildLoggerInterface $logger;
     private MailerInterface $mailer;
+    private ?Email $lastMessage = null;
 
     public function __construct(
         ConfigurationInterface $configuration,
@@ -34,7 +35,7 @@ class EmailSender implements EmailSenderInterface
         $this->mailer        = $mailer;
     }
 
-    public function getFrom(): Address
+    private function getFrom(): Address
     {
         $from = (string)$this->configuration->get(
             'php-censor.email_settings.from_address',
@@ -48,14 +49,8 @@ class EmailSender implements EmailSenderInterface
         return Address::create($from);
     }
 
-    public function send(EmailInterface $email): bool
+    private function createEmail(EmailInterface $email): Email
     {
-        $smtpAddress = $this->configuration->get('php-censor.email_settings.smtp_address');
-
-        $this->logger->logDebug(
-            \sprintf("SMTP: '%s'", !empty($smtpAddress) ? 'true' : 'false')
-        );
-
         $message = (new Email())
             ->subject($email->getSubject())
             ->from($this->getFrom())
@@ -72,8 +67,28 @@ class EmailSender implements EmailSenderInterface
             $message->cc(...$carbonCopyEmails);
         }
 
+        return $message;
+    }
+
+    public function getLastMessage(): ?Email
+    {
+        return $this->lastMessage;
+    }
+
+    public function send(EmailInterface $email): bool
+    {
+        $smtpAddress = $this->configuration->get('php-censor.email_settings.smtp_address');
+
+        $this->logger->logDebug(
+            \sprintf("SMTP: '%s'", !empty($smtpAddress) ? 'true' : 'false')
+        );
+
+        $this->lastMessage = $this->createEmail($email);
+
         try {
-            $this->mailer->send($message);
+            $this->mailer->send(
+                $this->lastMessage
+            );
         } catch (\Throwable $e) {
             $this->logger->logWarning($e->getMessage());
 

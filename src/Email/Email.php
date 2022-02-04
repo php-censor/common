@@ -20,7 +20,9 @@ class Email implements EmailInterface
 
     public function addEmailTo(string $email, ?string $name = null): self
     {
-        $this->emailsTo[$email] = $name;
+        $this->emailsTo[] = $name
+            ? "${name} <${email}>"
+            : $email;
 
         return $this;
     }
@@ -48,7 +50,9 @@ class Email implements EmailInterface
 
     public function addCarbonCopyEmail(string $email, ?string $name = null): self
     {
-        $this->carbonCopyEmails[$email] = $name;
+        $this->carbonCopyEmails[] = $name
+            ? "${name} <${email}>"
+            : $email;
 
         return $this;
     }
