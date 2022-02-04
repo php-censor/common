@@ -14,7 +14,7 @@ interface EmailInterface
 {
     public const DEFAULT_FROM = 'PHP Censor <no-reply@php-censor.local>';
 
-    public function setEmailTo(string $email, ?string $name = null): self;
+    public function addEmailTo(string $email, ?string $name = null): self;
 
     public function setSubject(string $subject): self;
 
@@ -24,7 +24,7 @@ interface EmailInterface
 
     public function addCarbonCopyEmail(string $email, ?string $name = null): self;
 
-    public function getEmailTo(): array;
+    public function getEmailsTo(): array;
 
     public function getSubject(): string;
 

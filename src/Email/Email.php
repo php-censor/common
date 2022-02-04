@@ -12,15 +12,17 @@ namespace PHPCensor\Common\Email;
  */
 class Email implements EmailInterface
 {
-    private array $emailTo = [];
+    private array $emailsTo = [];
     private array $carbonCopyEmails = [];
     private string $subject = 'Email from PHP Censor';
     private string $body = '';
     private bool $isHtml = false;
 
-    public function setEmailTo(string $email, ?string $name = null): self
+    public function addEmailTo(string $email, ?string $name = null): self
     {
-        $this->emailTo[$email] = $name;
+        $this->emailsTo[] = $name
+            ? "${name} <${email}>"
+            : $email;
 
         return $this;
     }
@@ -48,14 +50,16 @@ class Email implements EmailInterface
 
     public function addCarbonCopyEmail(string $email, ?string $name = null): self
     {
-        $this->carbonCopyEmails[$email] = $name;
+        $this->carbonCopyEmails[] = $name
+            ? "${name} <${email}>"
+            : $email;
 
         return $this;
     }
 
-    public function getEmailTo(): array
+    public function getEmailsTo(): array
     {
-        return $this->emailTo;
+        return $this->emailsTo;
     }
 
     public function getSubject(): string

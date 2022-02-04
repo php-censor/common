@@ -167,9 +167,6 @@ abstract class Plugin implements PluginInterface
         $this->initPluginSettings();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     abstract public static function getName(): string;
 
     /**
@@ -177,9 +174,6 @@ abstract class Plugin implements PluginInterface
      */
     abstract public function execute(): bool;
 
-    /**
-     * {@inheritDoc}
-     */
     public static function canExecute(string $stage, BuildInterface $build): bool
     {
         return false;

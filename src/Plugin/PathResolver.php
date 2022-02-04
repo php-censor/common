@@ -47,9 +47,6 @@ class PathResolver implements PathResolverInterface
         $this->initBuildSettings($projectConfig);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function resolveDirectory(string $pluginDirectory): string
     {
         if ($pluginDirectory) {
@@ -84,9 +81,6 @@ class PathResolver implements PathResolverInterface
         return $finalBinaryPath;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function resolvePath(string $path, bool $isFile = false): string
     {
         return $this->getRealPath(
