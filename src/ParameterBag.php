@@ -40,9 +40,6 @@ class ParameterBag implements ParameterBagInterface, \IteratorAggregate, \Counta
         return $parametersPart;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function has(string $key): bool
     {
         if (\array_key_exists($key, $this->parameters)) {
@@ -61,9 +58,6 @@ class ParameterBag implements ParameterBagInterface, \IteratorAggregate, \Counta
         return true;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function all(): array
     {
         return $this->parameters;

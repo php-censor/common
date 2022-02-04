@@ -8,8 +8,8 @@ PHP Censor Common
 
 PHP Censor common library.
 
-Install
--------
+Installation
+------------
 
 Via Composer:
 
@@ -17,7 +17,7 @@ Via Composer:
 composer require php-censor/common
 ```
 
-Code quality
+Code Quality
 ------------
 
 In the `Makefile` you can find commands for running unit tests, static analyzers etc.
