@@ -14,4 +14,5 @@ use PHPCensor\Common\ParameterBagInterface;
  */
 interface ConfigurationInterface extends ParameterBagInterface
 {
+    public function load(): void;
 }
