@@ -18,6 +18,9 @@ use Symfony\Component\Mime\Email as MimeEmail;
 
 class TestConfiguration extends ParameterBag implements ConfigurationInterface
 {
+    public function load(): void
+    {
+    }
 }
 
 class TestBuildLogger implements BuildLoggerInterface
