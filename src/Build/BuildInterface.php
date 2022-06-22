@@ -35,6 +35,8 @@ interface BuildInterface
     public const SOURCE_WEBHOOK_PULL_REQUEST_UPDATED  = 6;
     public const SOURCE_WEBHOOK_PULL_REQUEST_APPROVED = 7;
     public const SOURCE_WEBHOOK_PULL_REQUEST_MERGED   = 8;
+    public const SOURCE_MANUAL_REBUILD_WEB            = 9;
+    public const SOURCE_MANUAL_REBUILD_CONSOLE        = 10;
 
     public function getId(): int;
 
