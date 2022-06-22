@@ -19,7 +19,6 @@ interface BuildErrorWriterInterface
         int $severity,
         ?string $file = null,
         ?int $lineStart = null,
-        ?int $lineEnd = null,
-        ?\DateTime $createdDate = null
+        ?int $lineEnd = null
     ): void;
 }
