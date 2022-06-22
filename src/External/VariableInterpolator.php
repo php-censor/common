@@ -68,7 +68,7 @@ class VariableInterpolator implements VariableInterpolatorInterface
             '%BUILD_LINK%'      => $build->getLink(),
             '%BRANCH%'          => $build->getBranch(),
             '%BRANCH_LINK%'     => $build->getBranchLink(),
-            '%ENVIRONMENT%'     => $build->getEnvironment(),
+            '%ENVIRONMENT%'     => $this->getEnvironmentNameById($build->getEnvironmentId()),
             '%SYSTEM_VERSION%'  => $applicationVersion,
         ];
     }
@@ -91,5 +91,10 @@ class VariableInterpolator implements VariableInterpolatorInterface
         \putenv('PHP_CENSOR_BRANCH_LINK=' . $this->variables['%BRANCH_LINK%']);
         \putenv('PHP_CENSOR_ENVIRONMENT=' . $this->variables['%ENVIRONMENT%']);
         \putenv('PHP_CENSOR_SYSTEM_VERSION=' . $this->variables['%SYSTEM_VERSION%']);
+    }
+
+    private function getEnvironmentNameById(int $id): string
+    {
+        return 'environment_' . $id;
     }
 }

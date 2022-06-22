@@ -57,9 +57,9 @@ class VariableInterpolatorBuild implements BuildInterface
         return 'tag';
     }
 
-    public function getEnvironment(): string
+    public function getEnvironmentId(): int
     {
-        return 'environment';
+        return 500;
     }
 
     public function getSource(): int
@@ -194,7 +194,7 @@ build_path,
 http://example.com/build/view/10,
 branch,
 branch_link,
-environment,
+environment_500,
 1.0.0
 for testing.',
             $interpolator->interpolate('
@@ -231,7 +231,7 @@ for testing.')
         self::assertEquals('http://example.com/build/view/10', \getenv('PHP_CENSOR_BUILD_LINK'));
         self::assertEquals('branch', \getenv('PHP_CENSOR_BRANCH'));
         self::assertEquals('branch_link', \getenv('PHP_CENSOR_BRANCH_LINK'));
-        self::assertEquals('environment', \getenv('PHP_CENSOR_ENVIRONMENT'));
+        self::assertEquals('environment_500', \getenv('PHP_CENSOR_ENVIRONMENT'));
         self::assertEquals('1.0.0', \getenv('PHP_CENSOR_SYSTEM_VERSION'));
     }
 

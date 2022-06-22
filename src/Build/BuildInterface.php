@@ -38,38 +38,38 @@ interface BuildInterface
     public const SOURCE_MANUAL_REBUILD_WEB            = 9;
     public const SOURCE_MANUAL_REBUILD_CONSOLE        = 10;
 
-    public function getId(): int;
+    public function getId(): ?int;
 
-    public function getProjectId(): int;
+    public function getProjectId(): ?int;
 
-    public function getCommitId(): string;
+    public function getCommitId(): ?string;
 
-    public function getCommitterEmail(): string;
+    public function getCommitterEmail(): ?string;
 
-    public function getCommitMessage(): string;
+    public function getCommitMessage(): ?string;
 
-    public function getCommitLink(): string;
+    public function getCommitLink(): ?string;
 
-    public function getBranch(): string;
+    public function getBranch(): ?string;
 
-    public function getBranchLink(): string;
+    public function getBranchLink(): ?string;
 
-    public function getTag(): string;
+    public function getTag(): ?string;
 
-    public function getEnvironment(): string;
+    public function getEnvironmentId(): ?int;
 
-    public function getSource(): int;
+    public function getSource(): ?int;
 
-    public function getUserId(): int;
+    public function getUserId(): ?int;
 
     /**
      * @return mixed
      */
     public function getExtra(?string $key = null);
 
-    public function getStatus(): int;
+    public function getStatus(): ?int;
 
-    public function getLog(): string;
+    public function getLog(): ?string;
 
     public function getCreateDate(): ?\DateTime;
 
@@ -80,13 +80,13 @@ interface BuildInterface
     /**
      * Returns absolute build path
      */
-    public function getBuildPath(): string;
+    public function getBuildPath(): ?string;
 
     public function isSuccessful(): bool;
 
-    public function getBuildDirectory(): string;
+    public function getBuildDirectory(): ?string;
 
-    public function getBuildBranchDirectory(): string;
+    public function getBuildBranchDirectory(): ?string;
 
     public function isDebug(): bool;
 
