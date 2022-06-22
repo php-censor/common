@@ -13,7 +13,7 @@ namespace PHPCensor\Common\Build;
 interface BuildErrorWriterInterface
 {
     public function write(
-        int $buildId,
+        BuildInterface $build,
         string $plugin,
         string $message,
         int $severity,

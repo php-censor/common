@@ -16,7 +16,7 @@ interface BuildMetaWriterInterface
      * @param mixed $value
      */
     public function write(
-        int $buildId,
+        BuildInterface $build,
         ?string $plugin,
         string $key,
         $value
