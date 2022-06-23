@@ -19,7 +19,7 @@ interface BuildMetaInterface
     public const KEY_COVERAGE = 'coverage';
     public const KEY_SUMMARY  = 'summary';
 
-    public function getKey(): string;
+    public function getKey(): ?string;
 
     /**
      * @return mixed

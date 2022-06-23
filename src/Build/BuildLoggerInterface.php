@@ -22,6 +22,6 @@ interface BuildLoggerInterface
 
     public function logFailure(
         string $message,
-        ?\Exception $exception = null
+        ?\Throwable $exception = null
     ): void;
 }
