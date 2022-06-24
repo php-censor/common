@@ -12,9 +12,9 @@ namespace PHPCensor\Common\Project;
  */
 interface ProjectInterface
 {
-    public function getId(): int;
+    public function getId(): ?int;
 
-    public function getTitle(): string;
+    public function getTitle(): ?string;
 
     /**
      * Returns build configuration for the project.
