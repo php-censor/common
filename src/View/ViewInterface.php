@@ -24,7 +24,7 @@ interface ViewInterface
      */
     public function setVariable(string $key, $value): bool;
 
-    public function setVariables(array $value): bool;
+    public function setVariables(array $values): bool;
 
     public function render(): string;
 }
