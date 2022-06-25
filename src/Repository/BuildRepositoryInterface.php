@@ -14,7 +14,7 @@ use PHPCensor\Common\Build\BuildInterface;
  */
 interface BuildRepositoryInterface
 {
-    public function getLatestByProjectAndBranch(
+    public function getLatestByProjectIdAndBranch(
         int $projectId,
         string $branch
     ): ?BuildInterface;
