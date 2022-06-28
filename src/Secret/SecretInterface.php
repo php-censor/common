@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PHPCensor\Common\Environment;
+namespace PHPCensor\Common\Secret;
 
 /**
  * @package    PHP Censor
@@ -10,13 +10,9 @@ namespace PHPCensor\Common\Environment;
  *
  * @author Dmitry Khomutov <poisoncorpsee@gmail.com>
  */
-interface EnvironmentInterface
+interface SecretInterface
 {
-    public function getId(): ?int;
-
     public function getName(): ?string;
 
-    public function getProjectId(): ?int;
-
-    public function getBranches(): array;
+    public function getValue(): ?string;
 }
