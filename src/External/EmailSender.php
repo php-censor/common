@@ -75,13 +75,15 @@ class EmailSender implements EmailSenderInterface
         return $this->lastMessage;
     }
 
-    public function send(EmailInterface $email): bool
+    public function send(EmailInterface $email, bool $verbose = false): bool
     {
-        $smtpAddress = $this->configuration->get('php-censor.email_settings.smtp_address');
+        if ($verbose) {
+            $smtpAddress = $this->configuration->get('php-censor.email_settings.smtp_address');
 
-        $this->logger->logDebug(
-            \sprintf("SMTP: '%s'", !empty($smtpAddress) ? 'true' : 'false')
-        );
+            $this->logger->logDebug(
+                \sprintf("SMTP: '%s'", !empty($smtpAddress) ? 'true' : 'false')
+            );
+        }
 
         $this->lastMessage = $this->createEmail($email);
 
@@ -90,7 +92,9 @@ class EmailSender implements EmailSenderInterface
                 $this->lastMessage
             );
         } catch (\Throwable $e) {
-            $this->logger->logWarning($e->getMessage());
+            if ($verbose) {
+                $this->logger->logWarning($e->getMessage());
+            }
 
             return false;
         }

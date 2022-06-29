@@ -12,5 +12,5 @@ namespace PHPCensor\Common\Email;
  */
 interface EmailSenderInterface
 {
-    public function send(EmailInterface $email): bool;
+    public function send(EmailInterface $email, bool $verbose = false): bool;
 }
