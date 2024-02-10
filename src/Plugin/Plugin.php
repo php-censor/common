@@ -23,26 +23,6 @@ use Psr\Container\ContainerInterface;
  */
 abstract class Plugin implements PluginInterface
 {
-    protected BuildInterface $build;
-
-    protected ProjectInterface $project;
-
-    protected ApplicationInterface $application;
-
-    protected BuildLoggerInterface $buildLogger;
-
-    protected BuildErrorWriterInterface $buildErrorWriter;
-
-    protected BuildMetaWriterInterface $buildMetaWriter;
-
-    protected CommandExecutorInterface $commandExecutor;
-
-    protected VariableInterpolatorInterface $variableInterpolator;
-
-    protected PathResolverInterface $pathResolver;
-
-    protected ContainerInterface $container;
-
     protected ParameterBag $options;
 
     protected ParameterBag $buildSettings;
@@ -82,28 +62,17 @@ abstract class Plugin implements PluginInterface
      * @throws \Throwable
      */
     public function __construct(
-        BuildInterface $build,
-        ProjectInterface $project,
-        BuildLoggerInterface $buildLogger,
-        BuildErrorWriterInterface $buildErrorWriter,
-        BuildMetaWriterInterface $buildMetaWriter,
-        CommandExecutorInterface $commandExecutor,
-        VariableInterpolatorInterface $variableInterpolator,
-        PathResolverInterface $pathResolver,
-        ApplicationInterface $application,
-        ContainerInterface $container
+        protected BuildInterface $build,
+        protected ProjectInterface $project,
+        protected BuildLoggerInterface $buildLogger,
+        protected BuildErrorWriterInterface $buildErrorWriter,
+        protected BuildMetaWriterInterface $buildMetaWriter,
+        protected CommandExecutorInterface $commandExecutor,
+        protected VariableInterpolatorInterface $variableInterpolator,
+        protected PathResolverInterface $pathResolver,
+        protected ApplicationInterface $application,
+        protected ContainerInterface $container
     ) {
-        $this->build                = $build;
-        $this->project              = $project;
-        $this->buildLogger          = $buildLogger;
-        $this->buildErrorWriter     = $buildErrorWriter;
-        $this->buildMetaWriter      = $buildMetaWriter;
-        $this->commandExecutor      = $commandExecutor;
-        $this->variableInterpolator = $variableInterpolator;
-        $this->pathResolver         = $pathResolver;
-        $this->application          = $application;
-        $this->container            = $container;
-
         $this->initOptions();
         $this->initBuildSettings();
 
@@ -186,7 +155,7 @@ abstract class Plugin implements PluginInterface
     {
         $projectConfig = $this->project->getBuildConfig();
 
-        $pluginName         = $this->getName();
+        $pluginName         = static::getName();
         $pluginOptionsArray = [];
         if (!empty($projectConfig[$pluginName])) {
             $pluginOptionsArray = $projectConfig[$pluginName];

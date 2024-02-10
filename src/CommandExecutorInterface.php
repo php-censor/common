@@ -14,10 +14,7 @@ use PHPCensor\Common\Exception\Exception;
  */
 interface CommandExecutorInterface
 {
-    /**
-     * @param mixed ...$params
-     */
-    public function executeCommand(...$params): bool;
+    public function executeCommand(mixed ...$params): bool;
 
     public function enableCommandOutput(): void;
 

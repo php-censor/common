@@ -13,11 +13,9 @@ namespace PHPCensor\Common;
 interface ParameterBagInterface
 {
     /**
-     * @param mixed  $default
-     *
      * @return mixed|null
      */
-    public function get(string $key, $default = null);
+    public function get(string $key, mixed $default = null);
 
     public function has(string $key): bool;
 

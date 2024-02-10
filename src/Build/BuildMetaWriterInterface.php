@@ -12,13 +12,10 @@ namespace PHPCensor\Common\Build;
  */
 interface BuildMetaWriterInterface
 {
-    /**
-     * @param mixed $value
-     */
     public function write(
         BuildInterface $build,
         ?string $plugin,
         string $key,
-        $value
+        mixed $value
     ): void;
 }
