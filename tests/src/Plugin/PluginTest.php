@@ -174,9 +174,7 @@ class PluginTest extends TestCase
         $this->variableInterpolator = $this->createMock(VariableInterpolatorInterface::class);
         $this->variableInterpolator
             ->method('interpolate')
-            ->willReturnCallback(function ($string) {
-                return \str_replace(['%BUILD_PATH%'], $this->buildPath, $string);
-            });
+            ->willReturnCallback(fn($string) => \str_replace(['%BUILD_PATH%'], $this->buildPath, (string) $string));
 
         $this->buildLogger      = $this->createMock(BuildLoggerInterface::class);
         $this->buildErrorWriter = $this->createMock(BuildErrorWriterInterface::class);

@@ -19,10 +19,7 @@ interface ViewInterface
      */
     public function getVariable(string $key);
 
-    /**
-     * @param mixed $value
-     */
-    public function setVariable(string $key, $value): bool;
+    public function setVariable(string $key, mixed $value): bool;
 
     public function setVariables(array $values): bool;
 

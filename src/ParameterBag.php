@@ -12,11 +12,8 @@ namespace PHPCensor\Common;
  */
 class ParameterBag implements ParameterBagInterface, \IteratorAggregate, \Countable
 {
-    protected array $parameters;
-
-    public function __construct(array $parameters = [])
+    public function __construct(protected array $parameters = [])
     {
-        $this->parameters = $parameters;
     }
 
     /**

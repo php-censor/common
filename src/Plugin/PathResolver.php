@@ -17,12 +17,6 @@ use PHPCensor\Common\VariableInterpolatorInterface;
  */
 class PathResolver implements PathResolverInterface
 {
-    private BuildInterface $build;
-
-    private BuildLoggerInterface $buildLogger;
-
-    private VariableInterpolatorInterface $variableInterpolator;
-
     protected ParameterBag $buildSettings;
 
     private ?string $buildDirectory = null;
@@ -35,15 +29,11 @@ class PathResolver implements PathResolverInterface
     private ?array $buildIgnores = null;
 
     public function __construct(
-        BuildInterface $build,
-        BuildLoggerInterface $buildLogger,
-        VariableInterpolatorInterface $variableInterpolator,
+        private readonly BuildInterface $build,
+        private readonly BuildLoggerInterface $buildLogger,
+        private readonly VariableInterpolatorInterface $variableInterpolator,
         array $projectConfig = []
     ) {
-        $this->build                = $build;
-        $this->buildLogger          = $buildLogger;
-        $this->variableInterpolator = $variableInterpolator;
-
         $this->initBuildSettings($projectConfig);
     }
 
@@ -98,9 +88,7 @@ class PathResolver implements PathResolverInterface
         if ($pluginIgnores) {
             $ignores = \array_merge(
                 $ignores,
-                \array_filter($pluginIgnores, function ($item) {
-                    return !empty($item);
-                })
+                \array_filter($pluginIgnores, fn($item) => !empty($item))
             );
         }
 
@@ -120,7 +108,7 @@ class PathResolver implements PathResolverInterface
         foreach ($ignores as $index => $ignore) {
             if (
                 !$ignore ||
-                ($onlyInBuildPath && '/' === \substr($ignore, 0, 1))
+                ($onlyInBuildPath && \str_starts_with((string) $ignore, '/'))
             ) {
                 unset($ignores[$index]);
             }
@@ -134,7 +122,7 @@ class PathResolver implements PathResolverInterface
     private function getRealPath(string $path, bool $isFile = false): string
     {
         $path = \rtrim(
-            \preg_replace(
+            (string) \preg_replace(
                 '#[/]{2,}#',
                 '/',
                 \str_replace(['/', '\\'], '/', $path)
@@ -231,9 +219,7 @@ class PathResolver implements PathResolverInterface
             if ($buildSettingsIgnores) {
                 $this->buildIgnores = \array_filter(
                     $buildSettingsIgnores,
-                    function (string $item) {
-                        return !empty($item);
-                    }
+                    fn(string $item) => !empty($item)
                 );
             }
         }
