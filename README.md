@@ -11,6 +11,14 @@ PHP Censor Common
 
 PHP Censor common library.
 
+Versions
+--------
+
+| Version | Branch        | Latest  | Description                                             | PHP version |
+|---------|---------------|---------|---------------------------------------------------------|-------------|
+| `1.0`   | `release-1.0` | `1.0.0` | Current stable version. Partial used in PHP Censor 2.0+ | `>= 7.4`    |
+| `2.0`   | `master`      | -       | Feature major version for PHP Censor 3.0 (WIP)          | `>= 8.1`    |
+
 Installation
 ------------
 
